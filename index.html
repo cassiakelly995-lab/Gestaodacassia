@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Executivo</title>
+<title>Executivo — Painel de Gestão</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
   --bg:#07080d;--night:#0c0e16;--deep:#11141f;--surf:#181c2a;
@@ -25,62 +24,57 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);disp
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 15% 20%,rgba(201,169,110,.05) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 85% 75%,rgba(107,147,201,.04) 0%,transparent 60%)}
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.06'/%3E%3C/svg%3E")}
 
-/* ── SPLASH ── */
-#splash{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;animation:splashOut 0.6s 2.2s ease forwards}
+/* SPLASH */
+#splash{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;animation:splashOut 0.6s 2.4s ease forwards}
 @keyframes splashOut{to{opacity:0;pointer-events:none;visibility:hidden}}
 .splash-logo{width:72px;height:72px;border:1px solid var(--goldlo);border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--gold);animation:splashLogo 1s ease;box-shadow:0 0 48px var(--goldg)}
 @keyframes splashLogo{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .splash-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;letter-spacing:.15em;color:var(--ink2);animation:splashText 1s .3s ease both}
 .splash-sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);animation:splashText 1s .5s ease both}
 .splash-bar{width:160px;height:1px;background:var(--b0);border-radius:1px;overflow:hidden;animation:splashText 1s .4s ease both;margin-top:10px}
-.splash-bar-fill{height:100%;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:barSweep 1.8s .6s ease infinite}
+.splash-fill{height:100%;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:barSweep 1.8s .6s ease infinite}
 @keyframes splashText{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes barSweep{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 
-/* ── FOCUS MODE ── */
+/* FOCUS MODE */
 #focusMode{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:32px}
 #focusMode.on{display:flex;animation:fadeUp .5s ease}
 .focus-task{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--gold);text-align:center;max-width:600px;line-height:1.3;padding:0 32px}
-.focus-sub{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3)}
 .focus-close{position:absolute;top:28px;right:28px;background:none;border:none;color:var(--ink3);cursor:pointer;font-size:20px;transition:color .2s}
 .focus-close:hover{color:var(--ink)}
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .sb{width:var(--sb);height:100vh;background:var(--night);border-right:1px solid var(--b0);display:flex;flex-direction:column;align-items:center;padding:22px 0;z-index:20;flex-shrink:0;position:relative}
 .sb::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--goldlo),transparent)}
-.sb-logo{width:38px;height:38px;border:1px solid var(--goldlo);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);margin-bottom:20px;position:relative;transition:all .3s;cursor:default}
-.sb-logo::after{content:'';position:absolute;inset:-1px;border-radius:10px;background:linear-gradient(135deg,rgba(201,169,110,.15),transparent);pointer-events:none}
+.sb-logo{width:38px;height:38px;border:1px solid var(--goldlo);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);margin-bottom:20px;cursor:default}
 .nb{width:44px;height:44px;border:none;background:transparent;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink3);transition:all .25s;position:relative;margin:1px 0}
 .nb:hover{background:var(--surf);color:var(--ink2)}
 .nb.on{background:var(--lift);color:var(--gold)}
 .nb.on::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:18px;background:linear-gradient(var(--goldhi),var(--goldlo));border-radius:0 2px 2px 0}
 .tip{position:absolute;left:56px;background:var(--raise);color:var(--ink);padding:6px 13px;border-radius:8px;font-size:12px;white-space:nowrap;border:1px solid var(--b1);box-shadow:0 8px 32px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;transform:translateX(-4px);z-index:300}
 .nb:hover .tip{opacity:1;transform:translateX(0)}
-.nb-dot{position:absolute;top:9px;right:9px;width:6px;height:6px;border-radius:50%;background:var(--rose);border:1.5px solid var(--night);display:none}
-.nb-dot.on{display:block}
 .sb-sep{width:26px;height:1px;background:var(--b0);margin:8px 0}
 .sb-btm{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:8px}
 .av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--goldlo),#4a3520);border:1px solid var(--goldlo);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--gold);cursor:pointer;transition:all .2s}
 .av:hover{box-shadow:0 0 16px var(--goldg)}
 
-/* ── MAIN ── */
+/* MAIN */
 .main{flex:1;height:100vh;overflow:hidden;display:flex;flex-direction:column;position:relative;z-index:1}
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .tb{height:56px;padding:0 32px;border-bottom:1px solid var(--b0);background:rgba(7,8,13,.72);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .tb-l{display:flex;align-items:baseline;gap:12px}
-.pg-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:.01em;line-height:1}
+.pg-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;line-height:1}
 .pg-sub{font-size:11px;color:var(--ink3);font-weight:300;letter-spacing:.03em}
 .tb-r{display:flex;align-items:center;gap:8px}
-.pill{padding:5px 14px;border-radius:20px;background:var(--surf);border:1px solid var(--b0);font-size:11.5px;color:var(--ink2);display:flex;align-items:center;gap:6px;letter-spacing:.02em}
+.pill{padding:5px 14px;border-radius:20px;background:var(--surf);border:1px solid var(--b0);font-size:11.5px;color:var(--ink2);display:flex;align-items:center;gap:6px}
 .live{width:6px;height:6px;border-radius:50%;background:var(--jade);animation:pulse 2.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .ib{width:34px;height:34px;border:1px solid var(--b0);background:var(--surf);border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink3);transition:all .2s}
 .ib:hover{background:var(--lift);color:var(--ink);border-color:var(--b1)}
 
 /* search */
-.sw{position:relative;display:none}
-.sw.on{display:block}
+.sw{position:relative;display:none}.sw.on{display:block}
 .si{background:var(--lift);border:1px solid var(--b1);border-radius:10px;padding:7px 12px 7px 34px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);outline:none;width:220px;transition:all .25s}
 .si:focus{border-color:var(--goldlo);box-shadow:0 0 0 3px var(--goldg2);width:260px}
 .si-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink3);pointer-events:none}
@@ -91,17 +85,16 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .sr-tag{font-size:10px;color:var(--ink3);background:var(--lift);padding:1px 7px;border-radius:8px}
 
 /* notif */
-.np{position:absolute;top:58px;right:12px;width:288px;background:var(--raise);border:1px solid var(--b1);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.7);z-index:200;display:none;animation:dropIn .2s ease;overflow:hidden}
-.np.on{display:block}
+.np{position:absolute;top:58px;right:12px;width:288px;background:var(--raise);border:1px solid var(--b1);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.7);z-index:200;display:none;overflow:hidden}
+.np.on{display:block;animation:dropIn .2s ease}
 @keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .np-hd{padding:14px 18px 10px;font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--b0)}
 .np-item{padding:12px 18px;border-bottom:1px solid var(--b0);display:flex;gap:12px}
 .np-item:last-child{border:none}
-.np-i{font-size:15px;flex-shrink:0;margin-top:1px}
 .np-t{font-size:12.5px;line-height:1.5}
 .np-tm{font-size:10.5px;color:var(--ink3);margin-top:3px}
 
-/* ── CONTENT ── */
+/* CONTENT */
 .cnt{flex:1;overflow-y:auto;padding:28px 32px;scrollbar-width:thin;scrollbar-color:var(--b1) transparent}
 .cnt::-webkit-scrollbar{width:3px}
 .cnt::-webkit-scrollbar-thumb{background:var(--b1);border-radius:3px}
@@ -110,25 +103,23 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
 @keyframes pgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* fullscreen toggle */
 .pg.fullscreen{position:fixed;inset:0;z-index:100;background:var(--bg);padding:28px 40px;overflow-y:auto}
 .fs-btn{background:none;border:1px solid var(--b0);border-radius:8px;padding:5px 10px;color:var(--ink3);cursor:pointer;font-size:11px;transition:all .2s;font-family:'DM Sans',sans-serif}
 .fs-btn:hover{background:var(--surf);color:var(--ink);border-color:var(--b1)}
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .g21{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
 .g12{display:grid;grid-template-columns:1fr 1.55fr;gap:16px}
 
-/* ── CARD ── */
+/* CARD */
 .card{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:22px;transition:border-color .25s;position:relative;overflow:hidden}
 .card:hover{border-color:var(--b1)}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(255,255,255,.05) 50%,transparent 90%)}
 
-/* ── KPI ── */
+/* KPI */
 .kpi{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:22px 22px 18px;position:relative;overflow:hidden;cursor:default;transition:all .3s cubic-bezier(.22,1,.36,1);animation:cardIn .5s ease both}
 .kpi:hover{transform:translateY(-3px);border-color:var(--b1);box-shadow:0 12px 40px rgba(0,0,0,.5)}
 .kpi-orb{position:absolute;top:-30px;right:-30px;width:110px;height:110px;border-radius:50%;opacity:.5;pointer-events:none}
@@ -137,52 +128,50 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .k-slate .kpi-orb{background:radial-gradient(circle,rgba(107,147,201,.16),transparent 70%)}
 .k-rose .kpi-orb{background:radial-gradient(circle,rgba(224,112,112,.16),transparent 70%)}
 .kpi-lbl{font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;line-height:1;margin-bottom:6px;letter-spacing:-.01em}
-.k-gold .kpi-val{color:var(--gold)} .k-jade .kpi-val{color:var(--jade)} .k-slate .kpi-val{color:var(--slate)} .k-rose .kpi-val{color:var(--rose)}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;line-height:1;margin-bottom:6px}
+.k-gold .kpi-val{color:var(--gold)}.k-jade .kpi-val{color:var(--jade)}.k-slate .kpi-val{color:var(--slate)}.k-rose .kpi-val{color:var(--rose)}
 .kpi-sub{font-size:11px;color:var(--ink3)}
 .kpi-ico{position:absolute;bottom:16px;right:20px;font-size:22px;opacity:.2}
 
-/* ── SECTION HEADING ── */
+/* SECTION HEADING */
 .sh{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;font-style:italic;color:var(--ink2);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.01em}
 .sh em{font-style:normal;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--ink3);letter-spacing:.04em}
 
-/* ── CHART ── */
+/* CHART */
 .chart-area{display:flex;align-items:flex-end;gap:7px;height:110px}
 .bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
 .br{width:100%;border-radius:4px 4px 0 0;min-height:4px;background:linear-gradient(180deg,var(--gold) 0%,rgba(201,169,110,.15) 100%);transition:height .9s cubic-bezier(.34,1.56,.64,1);cursor:pointer;position:relative}
 .br::before{content:attr(data-v);position:absolute;top:-22px;left:50%;transform:translateX(-50%) scaleY(0);transform-origin:bottom;background:var(--raise);border:1px solid var(--b1);padding:2px 8px;border-radius:6px;font-size:10.5px;white-space:nowrap;color:var(--ink);transition:transform .15s}
 .br:hover::before{transform:translateX(-50%) scaleY(1)}
-.bl{font-size:10px;color:var(--ink3);letter-spacing:.04em}
-
-/* monthly chart toggle */
+.bl{font-size:10px;color:var(--ink3)}
 .chart-toggle{display:flex;gap:4px;margin-bottom:12px}
 .ctb{padding:4px 12px;border-radius:20px;font-size:11px;border:1px solid var(--b0);background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .ctb.on{background:var(--lift);color:var(--gold);border-color:var(--goldlo)}
 
-/* ── ACTIVITY ── */
+/* ACTIVITY */
 .act{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--b0)}
 .act:last-child{border:none}
 .act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
 .act-t{font-size:12.5px;line-height:1.55}
 .act-tm{font-size:10.5px;color:var(--ink3);margin-top:2px}
 
-/* ── POMODORO ── */
+/* POMODORO */
 .pomo-card{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:24px;text-align:center;position:relative;overflow:hidden}
 .pomo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .pomo-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
 .pomo-svg{width:140px;height:140px;transform:rotate(-90deg)}
 .pomo-track{fill:none;stroke:var(--lift);stroke-width:8}
 .pomo-prog{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .5s ease;stroke-dasharray:376;stroke-dashoffset:0}
-.pomo-prog.break{stroke:var(--jade)}
+.pomo-prog.brk{stroke:var(--jade)}
 .pomo-time{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold);line-height:1}
-.pomo-label{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
-.pomo-task{font-size:12.5px;color:var(--ink2);margin-bottom:16px;font-style:italic;min-height:20px}
+.pomo-lbl{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.pomo-task-txt{font-size:12.5px;color:var(--ink2);margin-bottom:16px;font-style:italic;min-height:20px}
 .pomo-cycles{display:flex;justify-content:center;gap:5px;margin-bottom:18px}
 .pomo-dot{width:8px;height:8px;border-radius:50%;background:var(--lift);border:1px solid var(--b1);transition:all .3s}
 .pomo-dot.done{background:var(--gold)}
 .pomo-btns{display:flex;justify-content:center;gap:8px}
 
-/* ── FORM ── */
+/* FORM */
 .field{margin-bottom:16px}
 .lbl{display:block;font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
 .inp{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--deep);border:1px solid var(--b1);border-radius:11px;padding:10px 14px;outline:none;resize:vertical;transition:border-color .2s,box-shadow .2s}
@@ -191,33 +180,32 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opac
 select.inp option{background:var(--surf)}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:11px;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.01em;white-space:nowrap}
-.b-gold{background:linear-gradient(135deg,#c9a96e 0%,#a07840 100%);color:var(--bg);font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12)}
-.b-gold:hover{background:linear-gradient(135deg,#dfc08a 0%,#b88b4f 100%);box-shadow:0 6px 24px var(--goldg),0 2px 0 rgba(0,0,0,.4);transform:translateY(-1px)}
+.b-gold{background:linear-gradient(135deg,#c9a96e,#a07840);color:var(--bg);font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12)}
+.b-gold:hover{background:linear-gradient(135deg,#dfc08a,#b88b4f);box-shadow:0 6px 24px var(--goldg);transform:translateY(-1px)}
 .b-ghost{background:transparent;color:var(--ink2);border:1px solid var(--b1)}
 .b-ghost:hover{background:var(--lift);color:var(--ink);border-color:var(--b2)}
 .b-jade{background:linear-gradient(135deg,#3db882,#2d9068);color:var(--bg);font-weight:600}
 .b-jade:hover{box-shadow:0 6px 24px rgba(78,201,154,.25);transform:translateY(-1px)}
 .b-slate{background:linear-gradient(135deg,#5a82b8,#3d618f);color:white;font-weight:600}
 .b-slate:hover{box-shadow:0 6px 24px rgba(107,147,201,.25);transform:translateY(-1px)}
-.b-rose{background:linear-gradient(135deg,#c85555,#943030);color:white;font-weight:600}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 .btn-sm{padding:7px 16px;font-size:12px;border-radius:9px}
 .btn-xs{padding:5px 11px;font-size:11px;border-radius:7px}
 .btn-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-/* ── PROGRESS ── */
+/* PROGRESS */
 .prog-wrap{margin-bottom:22px}
 .prog-top{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:8px}
 .prog-track{height:5px;background:var(--lift);border-radius:3px;overflow:hidden}
 .prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--goldlo),var(--jade));transition:width .7s cubic-bezier(.22,1,.36,1)}
 
-/* ── TASKS ── */
+/* TASKS */
 .t-bar{display:flex;gap:8px;margin-bottom:14px}
 .t-bar .inp{flex:1}
 .chips{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.ch{padding:5px 15px;border-radius:20px;font-size:11.5px;border:1px solid var(--b0);background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.ch{padding:5px 15px;border-radius:20px;font-size:11.5px;border:1px solid var(--b0);background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s}
 .ch.on,.ch:hover{background:var(--lift);color:var(--ink);border-color:var(--goldlo)}
 .tlist{display:flex;flex-direction:column;gap:7px}
 .ti{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--surf);border:1px solid var(--b0);border-radius:13px;transition:all .2s;animation:cardIn .3s ease both}
@@ -239,18 +227,18 @@ select.inp option{background:var(--surf)}
 .empty{text-align:center;padding:52px 20px;color:var(--ink3)}
 .empty-ico{font-size:36px;margin-bottom:14px;opacity:.3}
 
-/* ── KANBAN ── */
+/* KANBAN */
 .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .kcol{background:var(--night);border:1px solid var(--b0);border-radius:var(--rl);padding:16px;min-height:220px;transition:all .2s}
 .kcol.over{background:var(--surf);border-color:var(--goldlo);box-shadow:inset 0 0 0 1px var(--goldlo)}
 .kcol-hd{font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
-.kcol-hd span{background:var(--raise);padding:2px 8px;border-radius:10px;font-size:10.5px}
+.kcol-hd span{background:var(--raise);padding:2px 8px;border-radius:10px}
 .kc{background:var(--surf);border:1px solid var(--b0);border-radius:11px;padding:12px 13px;margin-bottom:8px;cursor:grab;font-size:12.5px;line-height:1.5;transition:all .2s}
 .kc:hover{border-color:var(--b1);box-shadow:0 4px 20px rgba(0,0,0,.4);transform:scale(1.01)}
-.kc.dragging{opacity:.35;cursor:grabbing;transform:scale(.97)}
+.kc.dragging{opacity:.35;cursor:grabbing}
 .kc-meta{font-size:10.5px;color:var(--ink3);margin-top:6px}
 
-/* ── AGENDA ── */
+/* AGENDA */
 .ag-grid{display:grid;grid-template-columns:198px 1fr;gap:18px}
 .mini-cal{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:18px}
 .cal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -267,17 +255,16 @@ select.inp option{background:var(--surf)}
 .cal-d.empty{color:transparent;pointer-events:none}
 .ag-slot{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--b0);align-items:flex-start}
 .ag-slot:last-child{border:none}
-.ag-time{font-size:10.5px;color:var(--ink3);width:44px;flex-shrink:0;padding-top:3px;font-variant-numeric:tabular-nums}
-.ag-ev{flex:1;background:var(--surf);border:1px solid var(--b0);border-radius:10px;padding:9px 13px;font-size:12.5px;border-left:2px solid var(--goldlo);transition:border-color .2s}
-.ag-ev:hover{border-left-color:var(--gold)}
-.ag-ev.jade{border-left-color:var(--jade)} .ag-ev.slate{border-left-color:var(--slate)} .ag-ev.rose{border-left-color:var(--rose)}
+.ag-time{font-size:10.5px;color:var(--ink3);width:44px;flex-shrink:0;padding-top:3px}
+.ag-ev{flex:1;background:var(--surf);border:1px solid var(--b0);border-radius:10px;padding:9px 13px;font-size:12.5px;border-left:2px solid var(--goldlo)}
+.ag-ev.jade{border-left-color:var(--jade)}.ag-ev.slate{border-left-color:var(--slate)}.ag-ev.rose{border-left-color:var(--rose)}
 .ag-ev-title{font-weight:500}
 .ag-del{background:none;border:none;cursor:pointer;color:var(--ink4);font-size:11px;float:right;transition:color .2s}
 .ag-del:hover{color:var(--rose)}
 .ag-add{display:flex;gap:8px;margin-top:14px}
 .ag-add .inp{flex:1}
 
-/* ── GOALS ── */
+/* GOALS */
 .goal-c{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:20px;transition:all .3s;animation:cardIn .4s ease both}
 .goal-c:hover{border-color:var(--b1);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
 .goal-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
@@ -289,35 +276,29 @@ select.inp option{background:var(--surf)}
 .gdel{background:none;border:none;cursor:pointer;color:var(--ink4);font-size:12px;transition:color .2s}
 .gdel:hover{color:var(--rose)}
 
-/* ── EMAIL ── */
+/* EMAIL */
 .em-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .hist{background:var(--night);border:1px solid var(--b0);border-radius:var(--rl);overflow:hidden}
 .hist-hd{padding:14px 18px;border-bottom:1px solid var(--b0);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
-.hist-list{overflow-y:auto;max-height:460px;scrollbar-width:thin;scrollbar-color:var(--b1) transparent}
+.hist-list{overflow-y:auto;max-height:460px}
 .hi{padding:13px 18px;border-bottom:1px solid var(--b0);cursor:pointer;transition:background .15s}
 .hi:hover{background:var(--surf)}
 .hi:last-child{border:none}
-.hi-to{font-size:10.5px;color:var(--ink3)} .hi-sub{font-size:13px;font-weight:500;margin:3px 0}
+.hi-to{font-size:10.5px;color:var(--ink3)}.hi-sub{font-size:13px;font-weight:500;margin:3px 0}
 .hi-prv{font-size:11.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hi-tm{font-size:10.5px;color:var(--ink4);margin-top:3px}
-
-/* email templates */
 .tmpl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .tmpl{background:var(--lift);border:1px solid var(--b0);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:12px;transition:all .2s;text-align:center}
 .tmpl:hover{border-color:var(--goldlo);color:var(--gold);background:var(--raise)}
 .tmpl-ico{font-size:18px;display:block;margin-bottom:4px}
 
-.sent-b{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:500;margin:0 0 0 18px}
-.s-pos{background:var(--jadelo);color:var(--jade)} .s-neu{background:var(--slatelo);color:var(--slate)}
-.s-neg{background:var(--roselo);color:var(--rose)} .s-urg{background:var(--amberlo);color:var(--amber)}
-
-/* ── NOTES ── */
+/* NOTES */
 .nc{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
 .note{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:18px;cursor:pointer;transition:all .25s;animation:cardIn .35s ease both;position:relative;overflow:hidden}
 .note:hover{border-color:var(--b1);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
 .note::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--rl) var(--rl) 0 0}
-.note.gold::after{background:var(--gold)} .note.jade::after{background:var(--jade)}
-.note.slate::after{background:var(--slate)} .note.rose::after{background:var(--rose)} .note.amber::after{background:var(--amber)}
+.note.gold::after{background:var(--gold)}.note.jade::after{background:var(--jade)}
+.note.slate::after{background:var(--slate)}.note.rose::after{background:var(--rose)}.note.amber::after{background:var(--amber)}
 .n-title{font-weight:500;font-size:13.5px;margin-bottom:7px}
 .n-body{font-size:12px;color:var(--ink2);line-height:1.65;max-height:60px;overflow:hidden}
 .n-ft{margin-top:12px;font-size:10.5px;color:var(--ink3);display:flex;justify-content:space-between;align-items:center}
@@ -326,98 +307,83 @@ select.inp option{background:var(--surf)}
 .add-n{background:transparent;border:1px dashed var(--b1);border-radius:var(--rl);padding:18px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:var(--ink3);font-size:13px;transition:all .2s;min-height:110px}
 .add-n:hover{background:var(--surf);border-color:var(--goldlo);color:var(--gold)}
 
-/* ── AI OUTPUT ── */
-.aio{margin-top:18px;background:var(--night);border:1px solid var(--b1);border-radius:var(--rl);display:none;animation:cardIn .3s ease;overflow:hidden}
-.aio.on{display:block}
-.aio-hd{padding:11px 18px;border-bottom:1px solid var(--b0);display:flex;align-items:center;justify-content:space-between;font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
-.ai-pill{display:flex;align-items:center;gap:5px;color:var(--jade);font-size:10.5px}
-.aio-body{padding:20px 18px;font-size:13px;line-height:1.8;color:var(--ink);white-space:pre-wrap;min-height:50px}
-.aio-foot{padding:10px 18px;border-top:1px solid var(--b0);display:flex;gap:8px}
+/* OUTPUT BOX (para e-mail e relatório sem IA) */
+.out-box{margin-top:16px;background:var(--night);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden}
+.out-hd{padding:11px 18px;border-bottom:1px solid var(--b0);display:flex;align-items:center;justify-content:space-between;font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.out-body{padding:20px 18px;font-size:13px;line-height:1.8;color:var(--ink);white-space:pre-wrap;min-height:60px}
+.out-foot{padding:10px 18px;border-top:1px solid var(--b0);display:flex;gap:8px}
+.out-edit{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:transparent;border:none;outline:none;resize:vertical;line-height:1.8;min-height:120px;padding:0}
+.out-edit::placeholder{color:var(--ink4);font-style:italic}
 
-/* ── CHAT ── */
-.chat-shell{background:var(--night);border:1px solid var(--b0);border-radius:var(--rl);overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 56px - 96px)}
-.chat-sug{padding:12px 18px 8px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--b0)}
-.sug-c{padding:5px 13px;border-radius:20px;font-size:11.5px;background:var(--lift);border:1px solid var(--b0);color:var(--ink3);cursor:pointer;transition:all .2s}
-.sug-c:hover{border-color:var(--goldlo);color:var(--gold);background:var(--raise)}
-.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:var(--b1) transparent}
-.chat-msgs::-webkit-scrollbar{width:2px}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--b1)}
-.msg{max-width:74%;animation:cardIn .25s ease}
-.msg.u{align-self:flex-end} .msg.a{align-self:flex-start}
-.msg-bub{padding:13px 17px;border-radius:15px;font-size:13px;line-height:1.7}
-.msg.u .msg-bub{background:linear-gradient(135deg,#b89055,#7d5a2d);color:#f5eed8;border-radius:15px 15px 4px 15px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
-.msg.a .msg-bub{background:var(--surf);border:1px solid var(--b1);color:var(--ink);border-radius:15px 15px 15px 4px}
-.msg-tm{font-size:10.5px;color:var(--ink3);margin-top:4px}
-.msg.u .msg-tm{text-align:right}
-.chat-bottom{padding:14px 18px;border-top:1px solid var(--b0);display:flex;gap:10px;background:var(--bg)}
-.chat-inp{flex:1;background:var(--surf);border:1px solid var(--b1);border-radius:11px;padding:11px 15px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;resize:none;transition:border-color .2s}
-.chat-inp:focus{border-color:var(--goldlo)}
-.chat-inp::placeholder{color:var(--ink4)}
+/* AI BADGE (desabilitado) */
+.ai-badge-off{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10.5px;background:var(--lift);color:var(--ink3);border:1px solid var(--b0)}
 
-/* ── BRIEFING ── */
-.brief-card{background:linear-gradient(135deg,rgba(201,169,110,.07) 0%,rgba(107,147,201,.04) 100%);border:1px solid rgba(201,169,110,.18);border-radius:var(--rl);padding:26px;margin-bottom:22px;position:relative;overflow:hidden}
+/* BRIEFING AREA */
+.brief-card{background:linear-gradient(135deg,rgba(201,169,110,.07),rgba(107,147,201,.04));border:1px solid rgba(201,169,110,.18);border-radius:var(--rl);padding:26px;margin-bottom:22px;position:relative;overflow:hidden}
 .brief-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--goldlo),transparent)}
-.brief-date{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--goldlo);margin-bottom:10px;letter-spacing:.04em}
+.brief-date{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--goldlo);margin-bottom:10px}
 .brief-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:12px;color:var(--goldhi)}
-.brief-body{font-size:13px;line-height:1.85;color:var(--ink2);white-space:pre-wrap}
+.brief-body{font-size:13px;line-height:1.85;color:var(--ink2)}
 
-/* ── PROFILE CARD ── */
+/* PROFILE */
 .profile-hero{background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(107,147,201,.04));border:1px solid rgba(201,169,110,.15);border-radius:var(--rl);padding:28px;margin-bottom:20px;display:flex;align-items:center;gap:20px;position:relative;overflow:hidden}
 .profile-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--goldlo),transparent)}
 .profile-av{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--goldlo),#4a3520);border:1px solid var(--goldlo);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--gold);flex-shrink:0}
 .profile-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--goldhi);line-height:1;margin-bottom:4px}
-.profile-role{font-size:12px;color:var(--ink3);letter-spacing:.04em}
+.profile-role{font-size:12px;color:var(--ink3)}
 .profile-company{font-size:13px;color:var(--ink2);margin-top:4px}
 
-/* meeting agenda */
-.agenda-output{background:var(--surf);border:1px solid var(--b0);border-radius:var(--rl);padding:20px;margin-top:16px;display:none;animation:cardIn .3s ease}
-.agenda-output.on{display:block}
+/* AI CTA box */
+.ai-cta{background:linear-gradient(135deg,rgba(201,169,110,.06),rgba(107,147,201,.04));border:1px solid rgba(201,169,110,.2);border-radius:var(--rl);padding:20px 22px;display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.ai-cta-ico{font-size:28px;flex-shrink:0}
+.ai-cta-title{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--goldhi);margin-bottom:4px}
+.ai-cta-sub{font-size:12px;color:var(--ink3);line-height:1.6}
 
-/* ── MODAL ── */
+/* MODAL */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center}
 .ov.on{display:flex}
 .modal{background:var(--lift);border:1px solid var(--b1);border-radius:22px;padding:30px;width:500px;max-width:95vw;animation:mIn .28s cubic-bezier(.22,1,.36,1);max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.8);position:relative}
 .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;border-radius:22px 22px 0 0;background:linear-gradient(90deg,transparent 10%,var(--goldlo) 50%,transparent 90%)}
 @keyframes mIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
 .modal-ttl{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}
-.mcls{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px;transition:color .2s;padding:2px}
+.mcls{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px;transition:color .2s}
 .mcls:hover{color:var(--ink)}
 .cp{display:flex;gap:8px}
 .co{width:24px;height:24px;border-radius:7px;cursor:pointer;border:2px solid transparent;transition:all .2s}
 .co:hover,.co.on{border-color:rgba(255,255,255,.6);transform:scale(1.15)}
 
-/* ── SPINNER ── */
+/* SPINNER (só visual, sem IA) */
 .spin{width:14px;height:14px;border:1.5px solid var(--b1);border-top-color:var(--gold);border-radius:50%;animation:sp .6s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.lr{display:flex;align-items:center;gap:9px;color:var(--ink3);font-size:13px}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:26px;right:26px;background:var(--raise);color:var(--ink);padding:12px 22px;border-radius:13px;font-size:13px;border:1px solid var(--b1);box-shadow:0 12px 48px rgba(0,0,0,.7);transform:translateY(56px);opacity:0;transition:all .3s cubic-bezier(.22,1,.36,1);z-index:9999;max-width:300px}
+/* TOAST */
+#toast{position:fixed;bottom:26px;right:26px;background:var(--raise);color:var(--ink);padding:12px 22px;border-radius:13px;font-size:13px;border:1px solid var(--b1);box-shadow:0 12px 48px rgba(0,0,0,.7);transform:translateY(56px);opacity:0;transition:all .3s cubic-bezier(.22,1,.36,1);z-index:9999;max-width:320px}
 #toast.on{transform:translateY(0);opacity:1}
 
+/* RESPONSIVE */
 @media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr)}.g21,.em-layout,.g12{grid-template-columns:1fr}.kanban,.ag-grid{grid-template-columns:1fr}.nc{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.cnt{padding:16px 14px}.nc{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.cnt{padding:16px 14px}.nc{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<!-- ══ SPLASH ══ -->
+<!-- SPLASH -->
 <div id="splash">
-  <div class="splash-logo">E</div>
+  <div class="splash-logo" id="splashLogo">E</div>
   <div class="splash-name" id="splashName">Executivo</div>
   <div class="splash-sub">Painel de Gestão</div>
-  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
-<!-- ══ FOCUS MODE ══ -->
+<!-- FOCUS MODE -->
 <div id="focusMode">
   <button class="focus-close" onclick="exitFocus()">✕ Sair do Foco</button>
-  <div class="focus-sub">Modo Foco Ativo</div>
+  <div style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3)">Modo Foco Ativo</div>
   <div class="focus-task" id="focusTask">—</div>
   <div style="font-size:12px;color:var(--ink3);font-style:italic">Concentre-se. Tudo mais pode esperar.</div>
 </div>
 
-<!-- ══ SIDEBAR ══ -->
+<!-- SIDEBAR -->
 <nav class="sb">
   <div class="sb-logo" id="sbLogo">E</div>
   <button class="nb on"  onclick="go('dash',this)"   >🏠<span class="tip">Dashboard</span></button>
@@ -431,65 +397,66 @@ select.inp option{background:var(--surf)}
   <button class="nb"     onclick="go('report',this)" >⊞<span class="tip">Relatórios</span></button>
   <button class="nb"     onclick="go('meeting',this)">◈<span class="tip">Pautas</span></button>
   <button class="nb"     onclick="go('pomo',this)"   >⏱<span class="tip">Pomodoro</span></button>
-  <button class="nb"     onclick="go('chat',this)"   >✦<span class="tip">IA Chat</span><span class="nb-dot" id="chatDot"></span></button>
   <div class="sb-btm">
     <button class="nb"   onclick="go('profile',this)">👤<span class="tip">Perfil</span></button>
-    <button class="nb"   onclick="toggleTheme()" id="themeBtn" style="font-size:14px">🌙<span class="tip">Tema</span></button>
-    <div class="av" onclick="go('profile',document.querySelectorAll('.nb')[12])" id="avBtn" title="Perfil">G</div>
+    <button class="nb"   onclick="toggleTheme()" style="font-size:14px">🌙<span class="tip">Tema</span></button>
+    <div class="av" onclick="go('profile',document.querySelectorAll('.nb')[10])" id="avBtn">G</div>
   </div>
 </nav>
 
-<!-- ══ MAIN ══ -->
+<!-- MAIN -->
 <div class="main">
   <div class="tb">
     <div class="tb-l">
       <div class="pg-title" id="pgT">Dashboard</div>
-      <div class="pg-sub"   id="pgS">Visão geral do seu dia</div>
+      <div class="pg-sub" id="pgS">Visão geral do seu dia</div>
     </div>
     <div class="tb-r">
       <div class="sw" id="sw"><span class="si-ico">⌕</span><input class="si" id="si" placeholder="Buscar…" oninput="doSearch()" onblur="setTimeout(closeSearch,200)"><div class="sd" id="sd"></div></div>
       <button class="ib" onclick="toggleSearch()">⌕</button>
-      <button class="ib" onclick="toggleNotif()" id="nbtn">🔔<span class="nb-dot" id="ndot" style="position:absolute;top:6px;right:6px"></span></button>
+      <button class="ib" onclick="toggleNotif()" id="nbtn">🔔</button>
       <div class="pill"><span class="live"></span><span id="clk">--:--</span></div>
       <div class="pill" id="dt"></div>
     </div>
   </div>
 
-  <!-- NOTIF -->
   <div class="np" id="npanel">
     <div class="np-hd">Notificações</div>
     <div id="nlist"></div>
   </div>
 
-  <div class="cnt" id="cnt">
+  <div class="cnt">
 
-    <!-- ══ DASHBOARD ══ -->
+    <!-- DASHBOARD -->
     <div class="pg on" id="pg-dash">
       <div id="profileHero"></div>
-      <div style="margin-bottom:6px">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;letter-spacing:-.01em" id="dashGreet">Bom dia</div>
-        <div style="font-size:12px;color:var(--ink3);font-style:italic;margin-top:2px" id="dashDate"></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;margin-bottom:4px" id="dashGreet">Bom dia</div>
+      <div style="font-size:12px;color:var(--ink3);font-style:italic;margin-bottom:20px" id="dashDate"></div>
+
+      <div class="ai-cta">
+        <div class="ai-cta-ico">✦</div>
+        <div>
+          <div class="ai-cta-title">Funcionalidades de IA disponíveis</div>
+          <div class="ai-cta-sub">Briefing do dia, sugestão de tarefas, geração de e-mails e relatórios com IA estão prontos.<br>Para ativar, abra este arquivo no <strong style="color:var(--gold)">Claude.ai</strong> ou configure sua chave de API.</div>
+        </div>
       </div>
-      <div style="margin-bottom:22px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <button class="btn b-gold btn-sm" onclick="genBriefing()" id="btnBrief">✦ Gerar Briefing do Dia</button>
-        <button class="btn b-ghost btn-sm" onclick="go('pomo',document.querySelectorAll('.nb')[9])">⏱ Iniciar Foco</button>
+
+      <div style="margin-bottom:22px;display:flex;gap:8px;flex-wrap:wrap">
         <button class="fs-btn" onclick="toggleFS('pg-dash')">⛶ Tela Cheia</button>
       </div>
-      <div id="briefArea"></div>
+
       <div class="g4">
         <div class="kpi k-gold" style="animation-delay:.05s"><div class="kpi-orb"></div><div class="kpi-lbl">Tarefas Pendentes</div><div class="kpi-val" id="kT">0</div><div class="kpi-sub" id="kTd">0 concluídas</div><div class="kpi-ico">✦</div></div>
         <div class="kpi k-jade" style="animation-delay:.1s"><div class="kpi-orb"></div><div class="kpi-lbl">Metas Ativas</div><div class="kpi-val" id="kG">0</div><div class="kpi-sub">em acompanhamento</div><div class="kpi-ico">◎</div></div>
-        <div class="kpi k-slate" style="animation-delay:.15s"><div class="kpi-orb"></div><div class="kpi-lbl">E-mails Gerados</div><div class="kpi-val" id="kE">0</div><div class="kpi-sub">nesta sessão</div><div class="kpi-ico">✉</div></div>
-        <div class="kpi k-rose" style="animation-delay:.2s"><div class="kpi-orb"></div><div class="kpi-lbl">Notas Ativas</div><div class="kpi-val" id="kN">0</div><div class="kpi-sub">salvas localmente</div><div class="kpi-ico">◻</div></div>
+        <div class="kpi k-slate" style="animation-delay:.15s"><div class="kpi-orb"></div><div class="kpi-lbl">Notas Salvas</div><div class="kpi-val" id="kN">0</div><div class="kpi-sub">localmente</div><div class="kpi-ico">◻</div></div>
+        <div class="kpi k-rose" style="animation-delay:.2s"><div class="kpi-orb"></div><div class="kpi-lbl">Eventos Hoje</div><div class="kpi-val" id="kEv">0</div><div class="kpi-sub">na agenda</div><div class="kpi-ico">📅</div></div>
       </div>
       <div class="g21">
         <div class="card" style="animation-delay:.25s">
           <div class="sh">Produtividade <em id="chartPeriodLabel">SEMANAL</em>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="chart-toggle">
-                <button class="ctb on" onclick="switchChart('week',this)">Semana</button>
-                <button class="ctb" onclick="switchChart('month',this)">Mês</button>
-              </div>
+            <div class="chart-toggle">
+              <button class="ctb on" onclick="switchChart('week',this)">Semana</button>
+              <button class="ctb" onclick="switchChart('month',this)">Mês</button>
             </div>
           </div>
           <div class="chart-area" id="chartBars"></div>
@@ -501,7 +468,7 @@ select.inp option{background:var(--surf)}
       </div>
     </div>
 
-    <!-- ══ TASKS ══ -->
+    <!-- TASKS -->
     <div class="pg" id="pg-tasks">
       <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="fs-btn" onclick="toggleFS('pg-tasks')">⛶ Tela Cheia</button></div>
       <div class="prog-wrap" id="pw" style="display:none">
@@ -509,14 +476,13 @@ select.inp option{background:var(--surf)}
         <div class="prog-track"><div class="prog-fill" id="pFill" style="width:0%"></div></div>
       </div>
       <div class="t-bar">
-        <input class="inp" id="tInp" placeholder="Nova tarefa…">
+        <input class="inp" id="tInp" placeholder="Nova tarefa… (Enter para adicionar)">
         <select class="inp" id="tPri" style="width:106px">
           <option value="alta">● Alta</option>
           <option value="média" selected>● Média</option>
           <option value="baixa">● Baixa</option>
         </select>
         <button class="btn b-gold" onclick="addTask()">+ Adicionar</button>
-        <button class="btn b-ghost btn-sm" onclick="suggestTasks()" id="bSug">✦ IA</button>
       </div>
       <div class="chips">
         <button class="ch on" onclick="flt('all',this)">Todas</button>
@@ -525,19 +491,15 @@ select.inp option{background:var(--surf)}
         <button class="ch" onclick="flt('alta',this)">Alta prioridade</button>
       </div>
       <div class="tlist" id="tList"></div>
-      <div class="aio" id="sugOut" style="margin-top:14px">
-        <div class="aio-hd"><span>Sugestões da IA</span><span class="ai-pill"><span class="live"></span> Ativo</span></div>
-        <div class="aio-body" id="sugBody"></div>
-      </div>
     </div>
 
-    <!-- ══ KANBAN ══ -->
+    <!-- KANBAN -->
     <div class="pg" id="pg-kanban">
       <p style="font-size:12px;color:var(--ink3);margin-bottom:16px;font-style:italic">Arraste os cartões para reorganizar o fluxo.</p>
       <div class="kanban" id="kanban"></div>
     </div>
 
-    <!-- ══ AGENDA ══ -->
+    <!-- AGENDA -->
     <div class="pg" id="pg-agenda">
       <div class="ag-grid">
         <div>
@@ -558,20 +520,15 @@ select.inp option{background:var(--surf)}
       </div>
     </div>
 
-    <!-- ══ GOALS ══ -->
+    <!-- GOALS -->
     <div class="pg" id="pg-goals">
       <div style="margin-bottom:18px;display:flex;gap:8px">
         <button class="btn b-gold" onclick="openGoal()">+ Nova Meta</button>
-        <button class="btn b-ghost btn-sm" onclick="suggestGoals()" id="bSugGoal">✦ IA Sugerir</button>
       </div>
       <div class="g3" id="goalGrid"></div>
-      <div class="aio" id="goalSugOut" style="margin-top:16px">
-        <div class="aio-hd"><span>Sugestões de Metas</span><span class="ai-pill"><span class="live"></span> IA</span></div>
-        <div class="aio-body" id="goalSugBody"></div>
-      </div>
     </div>
 
-    <!-- ══ EMAIL ══ -->
+    <!-- EMAIL -->
     <div class="pg" id="pg-email">
       <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="fs-btn" onclick="toggleFS('pg-email')">⛶ Tela Cheia</button></div>
       <div class="em-layout">
@@ -590,87 +547,81 @@ select.inp option{background:var(--surf)}
             <div class="field"><label class="lbl">Tom</label><select class="inp" id="eTom"><option>Profissional e cordial</option><option>Formal e respeitoso</option><option>Direto e objetivo</option><option>Empático e amigável</option><option>Urgente mas educado</option></select></div>
           </div>
           <div class="field"><label class="lbl">Assunto</label><input class="inp" id="eAss" placeholder="Proposta, cobrança…"></div>
-          <div class="field"><label class="lbl">Contexto</label><textarea class="inp" id="eCtx" rows="4" placeholder="Descreva o que precisa comunicar…"></textarea></div>
+          <div class="field"><label class="lbl">Escreva o e-mail manualmente</label><textarea class="inp" id="eCtx" rows="6" placeholder="Escreva aqui o conteúdo do e-mail…&#10;&#10;(Para geração automática com IA, abra no Claude.ai)"></textarea></div>
           <div class="btn-row">
-            <button class="btn b-gold" onclick="genEmail()" id="bEmail">✦ Gerar E-mail</button>
-            <button class="btn b-ghost btn-sm" onclick="openAnalyze()">⊕ Analisar Recebido</button>
+            <button class="btn b-gold" onclick="saveEmail()">💾 Salvar Rascunho</button>
+            <button class="btn b-ghost btn-sm" onclick="cpEmail()">⊕ Copiar</button>
           </div>
-          <div class="aio" id="emailOut">
-            <div class="aio-hd"><span>E-mail gerado</span><span class="ai-pill"><span class="live"></span> IA</span></div>
-            <div class="aio-body" id="emailRes"></div>
-            <div id="sentWrap" style="padding:0 18px 12px"></div>
-            <div class="aio-foot">
-              <button class="btn b-ghost btn-xs" onclick="cp('emailRes',this)">⊕ Copiar</button>
-              <button class="btn b-ghost btn-xs" onclick="genEmail()">↺ Regerar</button>
-              <button class="btn b-ghost btn-xs" onclick="exportPDF('emailRes','E-mail')">⬇ PDF</button>
-            </div>
+          <div class="out-box" id="emailOut" style="display:none">
+            <div class="out-hd"><span>Rascunho salvo</span><span class="ai-badge-off">Sem IA</span></div>
+            <div class="out-body" id="emailRes"></div>
+            <div class="out-foot"><button class="btn b-ghost btn-xs" onclick="cp('emailRes',this)">⊕ Copiar</button></div>
           </div>
         </div>
         <div>
-          <div class="hist"><div class="hist-hd">Histórico da sessão</div><div class="hist-list" id="histList"><div style="padding:24px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Nenhum e-mail gerado ainda.</div></div></div>
+          <div class="hist"><div class="hist-hd">Rascunhos salvos</div><div class="hist-list" id="histList"><div style="padding:24px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Nenhum rascunho ainda.</div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ══ NOTES ══ -->
+    <!-- NOTES -->
     <div class="pg" id="pg-notes">
       <div class="nc" id="notesGrid"></div>
     </div>
 
-    <!-- ══ REPORT ══ -->
+    <!-- REPORT -->
     <div class="pg" id="pg-report">
       <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="fs-btn" onclick="toggleFS('pg-report')">⛶ Tela Cheia</button></div>
       <div class="g12">
         <div>
           <div class="fr">
-            <div class="field"><label class="lbl">Tipo</label><select class="inp" id="rTipo"><option>Desempenho de Equipe</option><option>Vendas e Resultados</option><option>Financeiro</option><option>Operacional / Processos</option><option>Reunião / Ata</option><option>Projeto</option></select></div>
+            <div class="field"><label class="lbl">Tipo</label><select class="inp" id="rTipo"><option>Desempenho de Equipe</option><option>Vendas e Resultados</option><option>Financeiro</option><option>Operacional</option><option>Reunião / Ata</option><option>Projeto</option></select></div>
             <div class="field"><label class="lbl">Período</label><input class="inp" id="rPer" placeholder="Março 2026…"></div>
           </div>
           <div class="field"><label class="lbl">Público-alvo</label><input class="inp" id="rPub" placeholder="diretoria, equipe…"></div>
-          <div class="field"><label class="lbl">Dados Brutos</label><textarea class="inp" id="rDados" rows="9" placeholder="Números, tópicos, anotações…"></textarea></div>
-          <button class="btn b-slate" onclick="genReport()" id="bRpt">⊞ Gerar Relatório</button>
+          <div class="field"><label class="lbl">Escreva o relatório</label><textarea class="inp" id="rDados" rows="10" placeholder="Digite o conteúdo do relatório aqui…&#10;&#10;(Para geração automática com IA, abra no Claude.ai)"></textarea></div>
+          <div class="btn-row">
+            <button class="btn b-slate" onclick="saveReport()">💾 Salvar Relatório</button>
+            <button class="btn b-ghost btn-sm" onclick="cpReport()">⊕ Copiar</button>
+          </div>
         </div>
         <div>
-          <div class="aio on" id="rptOut" style="margin-top:0">
-            <div class="aio-hd"><span>Relatório</span><span class="ai-pill"><span class="live"></span> IA</span></div>
-            <div class="aio-body" id="rptRes" style="min-height:340px;color:var(--ink3);font-style:italic">Preencha e clique em Gerar Relatório.</div>
-            <div class="aio-foot">
-              <button class="btn b-ghost btn-xs" onclick="cp('rptRes',this)">⊕ Copiar</button>
-              <button class="btn b-ghost btn-xs" onclick="exportPDF('rptRes','Relatório')">⬇ Exportar PDF</button>
-            </div>
+          <div class="out-box" id="rptOut">
+            <div class="out-hd"><span>Relatório</span><span class="ai-badge-off">Sem IA</span></div>
+            <div class="out-body" id="rptRes" style="min-height:340px;color:var(--ink3);font-style:italic">Preencha e clique em Salvar Relatório.</div>
+            <div class="out-foot"><button class="btn b-ghost btn-xs" onclick="cp('rptRes',this)">⊕ Copiar</button></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ MEETING ══ -->
+    <!-- MEETING -->
     <div class="pg" id="pg-meeting">
       <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="fs-btn" onclick="toggleFS('pg-meeting')">⛶ Tela Cheia</button></div>
       <div class="g12">
         <div>
-          <div class="field"><label class="lbl">Tema da Reunião</label><input class="inp" id="mTema" placeholder="Ex: Revisão de resultados Q1…"></div>
+          <div class="field"><label class="lbl">Tema da Reunião</label><input class="inp" id="mTema" placeholder="Ex: Revisão Q1…"></div>
           <div class="fr">
-            <div class="field"><label class="lbl">Participantes</label><input class="inp" id="mPart" placeholder="Ex: time de vendas, CEO…"></div>
+            <div class="field"><label class="lbl">Participantes</label><input class="inp" id="mPart" placeholder="time de vendas, CEO…"></div>
             <div class="field"><label class="lbl">Duração</label><select class="inp" id="mDur"><option>30 minutos</option><option>45 minutos</option><option selected>1 hora</option><option>1h30</option><option>2 horas</option></select></div>
           </div>
-          <div class="field"><label class="lbl">Objetivo principal</label><textarea class="inp" id="mObj" rows="3" placeholder="O que precisa ser decidido ou resolvido?"></textarea></div>
-          <div class="field"><label class="lbl">Contexto adicional</label><textarea class="inp" id="mCtx" rows="3" placeholder="Informações relevantes, histórico…"></textarea></div>
-          <button class="btn b-gold" onclick="genMeeting()" id="bMeet">◈ Gerar Pauta com IA</button>
+          <div class="field"><label class="lbl">Escreva a pauta</label><textarea class="inp" id="mPauta" rows="8" placeholder="1. Abertura (5min)&#10;2. Revisão de resultados (15min)&#10;3. Discussão de metas (20min)&#10;4. Próximos passos (15min)&#10;5. Encerramento (5min)&#10;&#10;(Para geração automática com IA, abra no Claude.ai)"></textarea></div>
+          <div class="btn-row">
+            <button class="btn b-gold" onclick="saveMeeting()">💾 Salvar Pauta</button>
+            <button class="btn b-ghost btn-sm" onclick="cpMeeting()">⊕ Copiar</button>
+          </div>
         </div>
         <div>
-          <div class="aio on" id="meetOut" style="margin-top:0">
-            <div class="aio-hd"><span>Pauta gerada</span><span class="ai-pill"><span class="live"></span> IA</span></div>
-            <div class="aio-body" id="meetRes" style="min-height:300px;color:var(--ink3);font-style:italic">Preencha os campos e clique em Gerar Pauta.</div>
-            <div class="aio-foot">
-              <button class="btn b-ghost btn-xs" onclick="cp('meetRes',this)">⊕ Copiar</button>
-              <button class="btn b-ghost btn-xs" onclick="exportPDF('meetRes','Pauta')">⬇ PDF</button>
-            </div>
+          <div class="out-box" id="meetOut">
+            <div class="out-hd"><span>Pauta</span><span class="ai-badge-off">Sem IA</span></div>
+            <div class="out-body" id="meetRes" style="min-height:300px;color:var(--ink3);font-style:italic">Preencha e clique em Salvar Pauta.</div>
+            <div class="out-foot"><button class="btn b-ghost btn-xs" onclick="cp('meetRes',this)">⊕ Copiar</button></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ POMODORO ══ -->
+    <!-- POMODORO -->
     <div class="pg" id="pg-pomo">
       <div class="g2" style="align-items:start">
         <div class="pomo-card">
@@ -680,9 +631,9 @@ select.inp option{background:var(--surf)}
               <circle class="pomo-prog" id="pomoRing" cx="60" cy="60" r="54"/>
             </svg>
             <div class="pomo-time" id="pomoTime">25:00</div>
-            <div class="pomo-label" id="pomoLabel">FOCO</div>
+            <div class="pomo-lbl" id="pomoLbl">FOCO</div>
           </div>
-          <div class="pomo-task" id="pomoTask">Nenhuma tarefa selecionada</div>
+          <div class="pomo-task-txt" id="pomoTaskTxt">Nenhuma tarefa selecionada</div>
           <div class="pomo-cycles" id="pomoCycles">
             <div class="pomo-dot"></div><div class="pomo-dot"></div>
             <div class="pomo-dot"></div><div class="pomo-dot"></div>
@@ -698,38 +649,16 @@ select.inp option{background:var(--surf)}
           <div class="card" style="margin-top:16px">
             <div class="sh" style="font-size:14px">Configurações</div>
             <div class="fr">
-              <div class="field"><label class="lbl">Foco (min)</label><input class="inp" type="number" id="pomoFocusMin" value="25" min="1" max="60"></div>
-              <div class="field"><label class="lbl">Pausa (min)</label><input class="inp" type="number" id="pomoBreakMin" value="5" min="1" max="30"></div>
+              <div class="field"><label class="lbl">Foco (min)</label><input class="inp" type="number" id="pomoFMin" value="25" min="1" max="60"></div>
+              <div class="field"><label class="lbl">Pausa (min)</label><input class="inp" type="number" id="pomoBMin" value="5" min="1" max="30"></div>
             </div>
-            <button class="btn b-ghost btn-sm" onclick="pomoApplyConfig()">Aplicar</button>
+            <button class="btn b-ghost btn-sm" onclick="pomoApply()">Aplicar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ CHAT ══ -->
-    <div class="pg" id="pg-chat">
-      <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="fs-btn" onclick="toggleFS('pg-chat')">⛶ Tela Cheia</button></div>
-      <div class="chat-shell">
-        <div class="chat-sug">
-          <span style="font-size:11px;color:var(--ink3);padding:5px 0;font-style:italic">Sugestões:</span>
-          <button class="sug-c" onclick="sendSug(this)">Resuma meu dia</button>
-          <button class="sug-c" onclick="sendSug(this)">Dicas de produtividade</button>
-          <button class="sug-c" onclick="sendSug(this)">Como priorizar tarefas?</button>
-          <button class="sug-c" onclick="sendSug(this)">Como delegar melhor?</button>
-          <button class="sug-c" onclick="sendSug(this)">Como conduzir 1:1s?</button>
-        </div>
-        <div class="chat-msgs" id="chatMsgs">
-          <div class="msg a"><div class="msg-bub">Olá. Sou seu assistente executivo com inteligência artificial. Estou aqui para análises, estratégias e decisões de gestão. Como posso ser útil hoje?</div><div class="msg-tm">agora</div></div>
-        </div>
-        <div class="chat-bottom">
-          <textarea class="chat-inp" id="chatInp" rows="1" placeholder="Faça uma pergunta de gestão…"></textarea>
-          <button class="btn b-gold" onclick="sendChat()" id="bChat">Enviar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ PROFILE ══ -->
+    <!-- PROFILE -->
     <div class="pg" id="pg-profile">
       <div class="card" style="max-width:520px">
         <div class="sh">Perfil do Gestor</div>
@@ -741,13 +670,13 @@ select.inp option{background:var(--surf)}
         <div class="field"><label class="lbl">Setor</label><input class="inp" id="profSector" placeholder="Ex: Varejo, Tecnologia…"></div>
         <div class="btn-row">
           <button class="btn b-gold" onclick="saveProfile()">Salvar Perfil</button>
-          <button class="btn b-ghost btn-sm" onclick="go('dash',document.querySelectorAll('.nb')[0])">← Voltar ao Dashboard</button>
+          <button class="btn b-ghost btn-sm" onclick="go('dash',document.querySelectorAll('.nb')[0])">← Dashboard</button>
         </div>
       </div>
     </div>
 
-  </div><!-- /cnt -->
-</div><!-- /main -->
+  </div>
+</div>
 
 <!-- MODALS -->
 <div class="ov" id="noteOv">
@@ -786,60 +715,40 @@ select.inp option{background:var(--surf)}
   </div>
 </div>
 
-<div class="ov" id="analyzeOv">
-  <div class="modal">
-    <div class="modal-ttl">Analisar E-mail <button class="mcls" onclick="document.getElementById('analyzeOv').classList.remove('on')">✕</button></div>
-    <div class="field"><label class="lbl">Cole o e-mail</label><textarea class="inp" id="analyzeInp" rows="8" placeholder="Conteúdo do e-mail recebido…"></textarea></div>
-    <div class="btn-row"><button class="btn b-slate" onclick="runAnalyze()" id="bAnaly">Analisar</button><button class="btn b-ghost" onclick="document.getElementById('analyzeOv').classList.remove('on')">Fechar</button></div>
-    <div class="aio" id="analyzeOut" style="margin-top:16px">
-      <div class="aio-hd"><span>Análise</span><span class="ai-pill"><span class="live"></span> IA</span></div>
-      <div class="aio-body" id="analyzeRes"></div>
-    </div>
-  </div>
-</div>
-
 <div id="toast"></div>
 
 <script>
-/* ═══════════ STATE ═══════════ */
+/* ═══ STATE ═══ */
 let tasks   = JSON.parse(localStorage.getItem('ex-tasks')  || '[]');
 let notes   = JSON.parse(localStorage.getItem('ex-notes')  || '[]');
 let goals   = JSON.parse(localStorage.getItem('ex-goals')  || '[]');
 let events  = JSON.parse(localStorage.getItem('ex-events') || '{}');
 let chartW  = JSON.parse(localStorage.getItem('ex-chart')  || '[0,0,0,0,0,0,0]');
-let chartM  = JSON.parse(localStorage.getItem('ex-chartm') || Array(30).fill(0).map((_,i)=>Math.floor(Math.random()*3)).toString().split(',').map(Number));
+let chartM  = JSON.parse(localStorage.getItem('ex-chartm') || JSON.stringify(Array.from({length:30},()=>Math.floor(Math.random()*3))));
 let profile = JSON.parse(localStorage.getItem('ex-profile')|| '{}');
-let eCnt=0, rCnt=0, noteColor='gold', tFilter='all', chatHistory=[];
-let emailHistory=[], activity=[], notifs=[];
+let emailDrafts = JSON.parse(localStorage.getItem('ex-emails') || '[]');
+let noteColor='gold', tFilter='all', activity=[], notifs=[], chartMode='week';
 const DAYS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
-let calDate=new Date(), selDate=new Date(), chartMode='week';
+let calDate=new Date(), selDate=new Date();
 
-/* Pomodoro state */
-let pomoFocus=25*60, pomoBreak=5*60, pomoLeft=25*60, pomoRunning=false, pomoIsBreak=false, pomoCycle=0, pomoTimer=null, pomoTaskId=null;
+/* Pomodoro */
+let pomoFocus=25*60, pomoBreak=5*60, pomoLeft=25*60, pomoRunning=false, pomoIsBreak=false, pomoCycle=0, pomoTimer=null;
 
 const META={
-  dash:    {t:'Dashboard',        s:'Visão geral do seu dia'},
-  tasks:   {t:'Tarefas',          s:'Priorize o que importa'},
-  kanban:  {t:'Kanban',           s:'Fluxo de trabalho visual'},
-  agenda:  {t:'Agenda',           s:'Compromissos e calendário'},
-  goals:   {t:'Metas',            s:'Acompanhamento de objetivos'},
-  email:   {t:'E-mails',          s:'Comunicação assistida por IA'},
-  notes:   {t:'Notas',            s:'Registro de ideias'},
-  report:  {t:'Relatórios',       s:'Síntese e documentação'},
-  meeting: {t:'Pautas de Reunião',s:'Gerador de agenda com IA'},
-  pomo:    {t:'Pomodoro',         s:'Técnica de foco e descanso'},
-  chat:    {t:'IA Chat',          s:'Assistente executivo'},
-  profile: {t:'Perfil',           s:'Suas informações'},
+  dash:{t:'Dashboard',s:'Visão geral do seu dia'},tasks:{t:'Tarefas',s:'Priorize o que importa'},
+  kanban:{t:'Kanban',s:'Fluxo de trabalho visual'},agenda:{t:'Agenda',s:'Compromissos e calendário'},
+  goals:{t:'Metas',s:'Acompanhamento de objetivos'},email:{t:'E-mails',s:'Rascunhos e comunicação'},
+  notes:{t:'Notas',s:'Registro de ideias'},report:{t:'Relatórios',s:'Síntese e documentação'},
+  meeting:{t:'Pautas de Reunião',s:'Organize suas reuniões'},pomo:{t:'Pomodoro',s:'Técnica de foco'},
+  profile:{t:'Perfil',s:'Suas informações'},
 };
 
-/* ── SPLASH & INIT ── */
-window.addEventListener('load', ()=>{
-  loadProfile();
-  tick(); setInterval(tick, 1000);
+/* ── INIT ── */
+window.addEventListener('load',()=>{
+  loadProfile(); tick(); setInterval(tick,1000);
   renderAct(); refreshDash(); renderChart();
   renderTasks(); renderKanban(); renderNotes(); renderGoals();
-  renderCal(); renderAgenda(); renderPomoTasks();
-  tasks.filter(t=>!t.done&&t.priority==='alta').slice(0,2).forEach(t=>addNotif('●',`Alta prioridade: "${t.text.substring(0,35)}"`));
+  renderCal(); renderAgenda(); renderPomoTasks(); renderHist();
 });
 
 /* ── PROFILE ── */
@@ -847,17 +756,18 @@ function loadProfile(){
   const n=profile.name||'Gestor';
   document.getElementById('avBtn').textContent=(n[0]||'G').toUpperCase();
   document.getElementById('sbLogo').textContent=(profile.company?profile.company[0]:'E').toUpperCase();
+  document.getElementById('splashLogo').textContent=(profile.company?profile.company[0]:'E').toUpperCase();
   document.getElementById('splashName').textContent=profile.company||'Executivo';
-  if(profile.name){document.getElementById('profName').value=profile.name;}
-  if(profile.role){document.getElementById('profRole').value=profile.role;}
-  if(profile.company){document.getElementById('profCompany').value=profile.company;}
-  if(profile.sector){document.getElementById('profSector').value=profile.sector;}
+  if(profile.name)document.getElementById('profName').value=profile.name;
+  if(profile.role)document.getElementById('profRole').value=profile.role;
+  if(profile.company)document.getElementById('profCompany').value=profile.company;
+  if(profile.sector)document.getElementById('profSector').value=profile.sector;
   renderProfileHero();
 }
 function saveProfile(){
   profile={name:document.getElementById('profName').value.trim(),role:document.getElementById('profRole').value.trim(),company:document.getElementById('profCompany').value.trim(),sector:document.getElementById('profSector').value.trim()};
   localStorage.setItem('ex-profile',JSON.stringify(profile));
-  loadProfile(); toast('Perfil salvo.');
+  loadProfile(); toast('Perfil salvo com sucesso.');
   go('dash',document.querySelectorAll('.nb')[0]);
 }
 function renderProfileHero(){
@@ -884,27 +794,19 @@ function go(name,el){
   document.getElementById('pg-'+name).classList.add('on');
   document.getElementById('pgT').textContent=META[name].t;
   document.getElementById('pgS').textContent=META[name].s;
-  if(name==='dash'){refreshDash();}
-  if(name==='notes'){renderNotes();}
-  if(name==='kanban'){renderKanban();}
+  if(name==='dash')refreshDash();
+  if(name==='notes')renderNotes();
+  if(name==='kanban')renderKanban();
   if(name==='agenda'){renderCal();renderAgenda();}
-  if(name==='goals'){renderGoals();}
-  if(name==='pomo'){renderPomoTasks();}
-  if(name==='chat'){document.getElementById('chatDot').classList.remove('on');}
+  if(name==='goals')renderGoals();
+  if(name==='pomo')renderPomoTasks();
 }
 
 /* ── FULLSCREEN ── */
-function toggleFS(pgId){
-  const pg=document.getElementById(pgId);
-  pg.classList.toggle('fullscreen');
-  toast(pg.classList.contains('fullscreen')?'Tela cheia ativada. Clique novamente para sair.':'Tela cheia desativada.');
-}
+function toggleFS(id){const p=document.getElementById(id);p.classList.toggle('fullscreen');toast(p.classList.contains('fullscreen')?'Tela cheia. Clique novamente para sair.':'Saiu da tela cheia.');}
 
 /* ── FOCUS MODE ── */
-function enterFocus(txt){
-  document.getElementById('focusTask').textContent=txt||'—';
-  document.getElementById('focusMode').classList.add('on');
-}
+function enterFocus(txt){document.getElementById('focusTask').textContent=txt||'—';document.getElementById('focusMode').classList.add('on');}
 function exitFocus(){document.getElementById('focusMode').classList.remove('on');}
 
 /* ── TOAST ── */
@@ -913,39 +815,9 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 /* ── COPY ── */
 function cp(id,btn){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{const o=btn.textContent;btn.textContent='Copiado';setTimeout(()=>btn.textContent=o,2000);});}
 
-/* ── PDF EXPORT ── */
-function exportPDF(contentId, title){
-  const content=document.getElementById(contentId).textContent.trim();
-  if(!content||content.includes('Preencha'))return toast('⚠ Nada para exportar ainda.');
-  try{
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF({orientation:'p',unit:'mm',format:'a4'});
-    const name=profile.name||'Gestor'; const company=profile.company||''; const role=profile.role||'';
-    doc.setFontSize(9); doc.setTextColor(140,130,110);
-    doc.text(`${company}${role?' — '+role:''}`,14,12);
-    doc.setFontSize(18); doc.setTextColor(20,18,14);
-    doc.setFont('helvetica','bold');
-    doc.text(title,14,24);
-    doc.setFontSize(9); doc.setTextColor(140,130,110);
-    doc.text(new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}),14,31);
-    doc.setDrawColor(201,169,110); doc.setLineWidth(0.5); doc.line(14,35,196,35);
-    doc.setFontSize(11); doc.setTextColor(30,28,24); doc.setFont('helvetica','normal');
-    const lines=doc.splitTextToSize(content,178);
-    let y=44;
-    lines.forEach(line=>{if(y>278){doc.addPage();y=20;}doc.text(line,14,y);y+=6;});
-    doc.setFontSize(8); doc.setTextColor(160,150,130);
-    doc.text(`Gerado por Executivo — Painel de Gestão`,14,290);
-    doc.save(`${title.toLowerCase().replace(/ /g,'-')}-${Date.now()}.pdf`);
-    toast(`PDF exportado: ${title}.pdf`);
-  }catch(e){toast('Erro ao gerar PDF. Verifique o console.');}
-}
-
 /* ── THEME ── */
 let isLight=false;
-function toggleTheme(){
-  isLight=!isLight;
-  document.body.style.cssText=isLight?`--bg:#f0f2f8;--night:#e4e7f0;--deep:#dde1ec;--surf:#ffffff;--lift:#f7f5f1;--raise:#eae8e0;--b0:rgba(0,0,0,.07);--b1:rgba(0,0,0,.11);--b2:rgba(0,0,0,.18);--ink:#1c1a17;--ink2:#4a4640;--ink3:#8c8882;--ink4:#b8b4b0;`:'';
-}
+function toggleTheme(){isLight=!isLight;document.body.style.cssText=isLight?`--bg:#f0f2f8;--night:#e4e7f0;--deep:#dde1ec;--surf:#ffffff;--lift:#f7f5f1;--raise:#eae8e0;--b0:rgba(0,0,0,.07);--b1:rgba(0,0,0,.11);--b2:rgba(0,0,0,.18);--ink:#1c1a17;--ink2:#4a4640;--ink3:#8c8882;--ink4:#b8b4b0;`:'';}
 
 /* ── SEARCH ── */
 function toggleSearch(){document.getElementById('sw').classList.toggle('on');document.getElementById('si').focus();}
@@ -954,41 +826,31 @@ function doSearch(){
   const q=document.getElementById('si').value.toLowerCase().trim(),d=document.getElementById('sd');
   if(!q){d.classList.remove('on');return;}
   let items=[];
-  tasks.filter(t=>t.text.toLowerCase().includes(q)).forEach(t=>items.push({ico:'✅',label:t.text,type:'Tarefa',pg:'tasks'}));
-  notes.filter(n=>n.title.toLowerCase().includes(q)).forEach(n=>items.push({ico:'◻',label:n.title,type:'Nota',pg:'notes'}));
-  goals.filter(g=>g.title.toLowerCase().includes(q)).forEach(g=>items.push({ico:'◎',label:g.title,type:'Meta',pg:'goals'}));
+  tasks.filter(t=>t.text.toLowerCase().includes(q)).forEach(t=>items.push({ico:'✅',label:t.text,type:'Tarefa',pg:'tasks',idx:0}));
+  notes.filter(n=>n.title.toLowerCase().includes(q)).forEach(n=>items.push({ico:'◻',label:n.title,type:'Nota',pg:'notes',idx:6}));
+  goals.filter(g=>g.title.toLowerCase().includes(q)).forEach(g=>items.push({ico:'◎',label:g.title,type:'Meta',pg:'goals',idx:4}));
   if(!items.length){d.innerHTML='<div class="sr" style="color:var(--ink3);font-style:italic">Sem resultados</div>';d.classList.add('on');return;}
-  const pgs=['dash','tasks','kanban','agenda','goals','email','notes','report','meeting','pomo','chat','profile'];
-  d.innerHTML=items.slice(0,6).map(i=>`<div class="sr" onclick="go('${i.pg}',document.querySelectorAll('.nb')[${pgs.indexOf(i.pg)}]);closeSearch()">${i.ico} <span style="flex:1">${i.label}</span><span class="sr-tag">${i.type}</span></div>`).join('');
+  d.innerHTML=items.slice(0,6).map(i=>`<div class="sr" onclick="go('${i.pg}',document.querySelectorAll('.nb')[${i.idx}]);closeSearch()">${i.ico} <span style="flex:1">${i.label}</span><span class="sr-tag">${i.type}</span></div>`).join('');
   d.classList.add('on');
 }
 
 /* ── NOTIFS ── */
-function addNotif(ico,txt){notifs.unshift({ico,txt,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});document.getElementById('ndot').classList.add('on');renderNotifs();}
-function renderNotifs(){const l=document.getElementById('nlist');if(!notifs.length){l.innerHTML='<div style="padding:20px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Sem notificações</div>';return;}l.innerHTML=notifs.slice(0,5).map(n=>`<div class="np-item"><div class="np-i">${n.ico}</div><div><div class="np-t">${n.txt}</div><div class="np-tm">${n.time}</div></div></div>`).join('');}
-function toggleNotif(){document.getElementById('npanel').classList.toggle('on');document.getElementById('ndot').classList.remove('on');}
+function addNotif(ico,txt){notifs.unshift({ico,txt,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});renderNotifs();}
+function renderNotifs(){const l=document.getElementById('nlist');if(!notifs.length){l.innerHTML='<div style="padding:20px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Sem notificações</div>';return;}l.innerHTML=notifs.slice(0,5).map(n=>`<div class="np-item"><div style="font-size:15px;flex-shrink:0">${n.ico}</div><div><div class="np-t">${n.txt}</div><div class="np-tm">${n.time}</div></div></div>`).join('');}
+function toggleNotif(){document.getElementById('npanel').classList.toggle('on');}
 document.addEventListener('click',e=>{if(!e.target.closest('#npanel')&&!e.target.closest('#nbtn'))document.getElementById('npanel').classList.remove('on');});
+renderNotifs();
 
 /* ── ACTIVITY ── */
 function addAct(ico,txt,c){activity.unshift({ico,txt,c,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});if(activity.length>8)activity.pop();renderAct();}
 function renderAct(){const f=document.getElementById('actFeed');if(!activity.length){f.innerHTML='<div class="act"><div class="act-dot" style="background:var(--ink4)"></div><div><div class="act-t" style="color:var(--ink3);font-style:italic">Nenhuma atividade registrada.</div></div></div>';return;}f.innerHTML=activity.map(a=>`<div class="act"><div class="act-dot" style="background:${a.c}"></div><div><div class="act-t">${a.ico} ${a.txt}</div><div class="act-tm">${a.time}</div></div></div>`).join('');}
 
 /* ── CHART ── */
-function switchChart(mode,el){
-  chartMode=mode;
-  document.querySelectorAll('.ctb').forEach(b=>b.classList.remove('on'));el.classList.add('on');
-  document.getElementById('chartPeriodLabel').textContent=mode==='week'?'SEMANAL':'MENSAL — ÚLTIMOS 30 DIAS';
-  renderChart();
-}
+function switchChart(mode,el){chartMode=mode;document.querySelectorAll('.ctb').forEach(b=>b.classList.remove('on'));el.classList.add('on');document.getElementById('chartPeriodLabel').textContent=mode==='week'?'SEMANAL':'MENSAL';renderChart();}
 function renderChart(){
   const b=document.getElementById('chartBars');
-  if(chartMode==='week'){
-    const mx=Math.max(...chartW,1);
-    b.innerHTML=chartW.map((v,i)=>`<div class="bw"><div class="br" style="height:${Math.max((v/mx)*100,3)}px" data-v="${v} tarefas"></div><div class="bl">${DAYS[i]}</div></div>`).join('');
-  } else {
-    const mx=Math.max(...chartM,1);
-    b.innerHTML=chartM.map((v,i)=>`<div class="bw" style="gap:3px"><div class="br" style="height:${Math.max((v/mx)*100,3)}px;background:linear-gradient(180deg,var(--slate) 0%,rgba(107,147,201,.15) 100%)" data-v="${v}"></div><div class="bl">${i+1}</div></div>`).join('');
-  }
+  if(chartMode==='week'){const mx=Math.max(...chartW,1);b.innerHTML=chartW.map((v,i)=>`<div class="bw"><div class="br" style="height:${Math.max((v/mx)*100,3)}px" data-v="${v} tarefas"></div><div class="bl">${DAYS[i]}</div></div>`).join('');}
+  else{const mx=Math.max(...chartM,1);b.innerHTML=chartM.map((v,i)=>`<div class="bw"><div class="br" style="height:${Math.max((v/mx)*100,3)}px;background:linear-gradient(180deg,var(--slate) 0%,rgba(107,147,201,.15) 100%)" data-v="${v}"></div><div class="bl">${i+1}</div></div>`).join('');}
 }
 
 /* ── DASH ── */
@@ -996,31 +858,10 @@ function refreshDash(){
   document.getElementById('kT').textContent=tasks.filter(t=>!t.done).length;
   document.getElementById('kTd').textContent=`${tasks.filter(t=>t.done).length} concluídas`;
   document.getElementById('kG').textContent=goals.length;
-  document.getElementById('kE').textContent=eCnt;
   document.getElementById('kN').textContent=notes.length;
+  const todayEvs=events[dk(new Date())]||[];
+  document.getElementById('kEv').textContent=todayEvs.length;
   renderChart();renderAct();renderProfileHero();
-}
-
-/* ── AI ── */
-async function ai(sys,usr){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:usr}]})});
-  const d=await r.json();return d.content?.[0]?.text||'Erro ao conectar.';
-}
-
-/* ── BRIEFING ── */
-async function genBriefing(){
-  const btn=document.getElementById('btnBrief'),area=document.getElementById('briefArea');
-  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Gerando…';
-  const pend=tasks.filter(t=>!t.done).map(t=>`- ${t.text} (${t.priority})`).join('\n')||'nenhuma';
-  const gl=goals.map(g=>`- ${g.title}: ${g.pct}%`).join('\n')||'nenhuma';
-  const profCtx=profile.name?`Gestor: ${profile.name}${profile.role?', '+profile.role:''}${profile.company?', '+profile.company:''}`:'' ;
-  try{
-    const r=await ai('Assistente executivo de alto nível. Briefing matinal conciso, sofisticado e motivador em português. Máximo 200 palavras. Estrutura: saudação personalizada, resumo estratégico do dia, prioridades, e uma citação motivacional. Tom executivo e refinado.',`${profCtx}\nData: ${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})}\nTarefas:\n${pend}\nMetas:\n${gl}`);
-    area.innerHTML=`<div class="brief-card"><div class="brief-date">${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}</div><div class="brief-title">Briefing Executivo</div><div class="brief-body">${r}</div><div style="margin-top:16px;display:flex;gap:8px"><button class="btn b-ghost btn-xs" onclick="exportPDF('briefContent','Briefing')">⬇ PDF</button></div></div>`;
-    document.getElementById('briefArea').querySelector('.brief-body').id='briefContent';
-    addAct('✦','Briefing do dia gerado','var(--gold)');addNotif('✦','Briefing matinal pronto');toast('Briefing gerado.');
-  }catch(e){area.innerHTML=`<div class="brief-card"><div class="brief-body" style="color:var(--rose)">Não foi possível conectar à IA.</div></div>`;}
-  btn.disabled=false;btn.innerHTML='✦ Gerar Briefing do Dia';
 }
 
 /* ── TASKS ── */
@@ -1035,7 +876,7 @@ function renderTasks(){
   const pw=document.getElementById('pw');
   if(total>0){pw.style.display='block';document.getElementById('pFill').style.width=(done/total*100)+'%';document.getElementById('pLbl').textContent=`${done}/${total}`;}else pw.style.display='none';
   const l=document.getElementById('tList');
-  if(!f.length){l.innerHTML=`<div class="empty"><div class="empty-ico">${tFilter==='done'?'◎':'◻'}</div><p style="font-size:12.5px;font-style:italic">${tFilter==='done'?'Nenhuma tarefa concluída.':'Adicione sua primeira tarefa.'}</p></div>`;return;}
+  if(!f.length){l.innerHTML=`<div class="empty"><div class="empty-ico">${tFilter==='done'?'◎':'◻'}</div><p style="font-size:12.5px;font-style:italic">${tFilter==='done'?'Nenhuma tarefa concluída.':'Adicione sua primeira tarefa acima.'}</p></div>`;return;}
   l.innerHTML=f.map(t=>`<div class="ti"><div class="tck ${t.done?'done':''}" onclick="toggleTask('${t.id}')"></div><div style="flex:1"><div class="ttxt ${t.done?'done':''}">${t.text}</div><div class="tmeta">${t.date}</div></div><span class="pb ${t.priority==='alta'?'p-hi':t.priority==='média'?'p-mid':'p-lo'}">${t.priority.charAt(0).toUpperCase()+t.priority.slice(1)}</span><button class="t-focus" title="Modo Foco" onclick="enterFocus('${t.text.replace(/'/g,"\\'")}')">⊙</button><button class="tdel" onclick="delTask('${t.id}')">✕</button></div>`).join('');
 }
 function addTask(){
@@ -1051,65 +892,15 @@ document.getElementById('tInp').addEventListener('keydown',e=>{if(e.key==='Enter
 function toggleTask(id){
   const t=tasks.find(t=>t.id===id);if(!t)return;
   t.done=!t.done;saveTasks();renderTasks();renderKanban();renderPomoTasks();
-  if(t.done){const i=new Date().getDay();chartW[i===0?6:i-1]++;localStorage.setItem('ex-chart',JSON.stringify(chartW));addAct('◎',`Concluída: "${t.text.substring(0,35)}"`, 'var(--jade)');toast('Tarefa concluída.');}
+  if(t.done){const i=new Date().getDay();chartW[i===0?6:i-1]++;localStorage.setItem('ex-chart',JSON.stringify(chartW));addAct('◎',`Concluída: "${t.text.substring(0,35)}"`, 'var(--jade)');toast('Tarefa concluída!');}
 }
 function delTask(id){tasks=tasks.filter(t=>t.id!==id);saveTasks();renderTasks();renderKanban();renderPomoTasks();toast('Tarefa removida.');}
 function flt(f,el){tFilter=f;document.querySelectorAll('.chips .ch').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderTasks();}
-async function suggestTasks(){
-  const btn=document.getElementById('bSug'),out=document.getElementById('sugOut'),body=document.getElementById('sugBody');
-  btn.disabled=true;out.classList.add('on');body.innerHTML='<div class="lr"><div class="spin"></div> Pensando…</div>';
-  const ex=tasks.filter(t=>!t.done).map(t=>`- ${t.text}`).join('\n')||'(nenhuma)';
-  try{const r=await ai('Assistente de produtividade executiva. Sugira 5 tarefas práticas para um gestor. Uma por linha, prefixe com [Alta], [Média] ou [Baixa]. Apenas as tarefas.',`Existentes:\n${ex}\nSugira 5 novas.`);body.textContent=r;addAct('✦','IA sugeriu tarefas','var(--slate)');}catch(e){body.textContent='Erro.';}
-  btn.disabled=false;
-}
-
-/* ── POMODORO ── */
-function renderPomoTasks(){
-  const l=document.getElementById('pomoTaskList');
-  const pending=tasks.filter(t=>!t.done);
-  if(!pending.length){l.innerHTML='<div class="empty" style="padding:20px"><p style="font-size:12px;font-style:italic">Sem tarefas pendentes.</p></div>';return;}
-  l.innerHTML=pending.slice(0,6).map(t=>`<div class="ti" style="cursor:pointer" onclick="selectPomoTask('${t.id}','${t.text.replace(/'/g,"\\'")}')"><div style="flex:1"><div class="ttxt">${t.text}</div></div><span class="pb ${t.priority==='alta'?'p-hi':t.priority==='média'?'p-mid':'p-lo'}">${t.priority.charAt(0).toUpperCase()+t.priority.slice(1)}</span></div>`).join('');
-}
-function selectPomoTask(id,txt){
-  pomoTaskId=id;
-  document.getElementById('pomoTask').textContent=txt;
-  toast(`Tarefa selecionada: "${txt.substring(0,30)}"`);
-}
-function pomoFmt(s){return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
-function pomoUpdateRing(){
-  const total=pomoIsBreak?pomoBreak:pomoFocus;
-  const pct=pomoLeft/total;
-  const circ=376;
-  document.getElementById('pomoRing').style.strokeDashoffset=circ*(1-pct);
-  document.getElementById('pomoRing').className='pomo-prog'+(pomoIsBreak?' break':'');
-  document.getElementById('pomoTime').textContent=pomoFmt(pomoLeft);
-  document.getElementById('pomoLabel').textContent=pomoIsBreak?'PAUSA':'FOCO';
-  document.getElementById('pomoTime').style.color=pomoIsBreak?'var(--jade)':'var(--gold)';
-}
-function pomoTick(){
-  if(pomoLeft<=0){
-    if(!pomoIsBreak){pomoCycle++;updatePomoCycles();}
-    pomoIsBreak=!pomoIsBreak;
-    pomoLeft=pomoIsBreak?pomoBreak:pomoFocus;
-    addNotif('⏱',pomoIsBreak?'Pausa iniciada! Descanse um pouco.':'Hora de focar! Ciclo iniciado.');
-    toast(pomoIsBreak?'⏱ Hora da pausa!':'⏱ Foco iniciado!');
-  } else { pomoLeft--; }
-  pomoUpdateRing();
-}
-function pomoToggle(){
-  if(pomoRunning){clearInterval(pomoTimer);pomoRunning=false;document.getElementById('pomoBtn').textContent='▶ Retomar';}
-  else{pomoTimer=setInterval(pomoTick,1000);pomoRunning=true;document.getElementById('pomoBtn').textContent='⏸ Pausar';}
-}
-function pomoReset(){clearInterval(pomoTimer);pomoRunning=false;pomoIsBreak=false;pomoLeft=pomoFocus;pomoUpdateRing();document.getElementById('pomoBtn').textContent='▶ Iniciar';}
-function updatePomoCycles(){const dots=document.querySelectorAll('.pomo-dot');dots.forEach((d,i)=>d.classList.toggle('done',i<pomoCycle%4));}
-function pomoApplyConfig(){pomoFocus=parseInt(document.getElementById('pomoFocusMin').value||25)*60;pomoBreak=parseInt(document.getElementById('pomoBreakMin').value||5)*60;pomoReset();toast('Configuração aplicada.');}
-pomoUpdateRing();
 
 /* ── KANBAN ── */
 function renderKanban(){
   const cols=['pendente','em andamento','concluído'],lbs=['Pendente','Em Andamento','Concluído'],colors=['var(--gold)','var(--slate)','var(--jade)'];
-  const byS={};cols.forEach(c=>byS[c]=[]);
-  tasks.forEach(t=>{const s=t.status||'pendente';if(byS[s])byS[s].push(t);else byS['pendente'].push(t);});
+  const byS={};cols.forEach(c=>byS[c]=[]);tasks.forEach(t=>{const s=t.status||'pendente';if(byS[s])byS[s].push(t);else byS['pendente'].push(t);});
   document.getElementById('kanban').innerHTML=cols.map((col,ci)=>`<div class="kcol" id="kc${ci}" ondragover="dov(event,${ci})" ondrop="ddr(event,${ci})" ondragleave="dlv(${ci})"><div class="kcol-hd" style="color:${colors[ci]}">${lbs[ci]} <span>${byS[col].length}</span></div>${byS[col].map(t=>`<div class="kc" draggable="true" id="kk${t.id}" ondragstart="dst(event,'${t.id}')">${t.text}<div class="kc-meta">${t.priority}</div></div>`).join('')}</div>`).join('');
 }
 let dragId=null;
@@ -1118,11 +909,9 @@ function dov(e,ci){e.preventDefault();document.getElementById('kc'+ci).classList
 function dlv(ci){document.getElementById('kc'+ci).classList.remove('over');}
 function ddr(e,ci){
   e.preventDefault();const statuses=['pendente','em andamento','concluído'];
-  const t=tasks.find(t=>t.id===dragId);
-  if(t){t.status=statuses[ci];t.done=(ci===2);saveTasks();}
+  const t=tasks.find(t=>t.id===dragId);if(t){t.status=statuses[ci];t.done=(ci===2);saveTasks();}
   document.getElementById('kc'+ci).classList.remove('over');
-  renderKanban();renderTasks();renderPomoTasks();
-  toast(`Movido para "${statuses[ci]}".`);
+  renderKanban();renderTasks();toast(`Movido para "${statuses[ci]}".`);
 }
 
 /* ── AGENDA ── */
@@ -1178,62 +967,53 @@ function renderGoals(){
 }
 function delGoal(id){goals=goals.filter(g=>g.id!==id);saveGoals();renderGoals();toast('Meta removida.');}
 function updGoal(id){const p=prompt('Novo progresso (%):');if(p===null)return;const g=goals.find(g=>g.id===id);if(g){g.pct=Math.min(100,Math.max(0,parseInt(p)||0));saveGoals();renderGoals();toast(`Meta: ${g.pct}%.`);}}
-async function suggestGoals(){
-  const btn=document.getElementById('bSugGoal'),out=document.getElementById('goalSugOut'),body=document.getElementById('goalSugBody');
-  btn.disabled=true;out.classList.add('on');body.innerHTML='<div class="lr"><div class="spin"></div> Elaborando…</div>';
-  try{const r=await ai('Assistente estratégico executivo. Sugira 5 metas SMART para um gestor de administração. Uma por linha com prazo. Apenas as metas.',`Sugira 5 metas estratégicas para 2026.`);body.textContent=r;}catch(e){body.textContent='Erro.';}
-  btn.disabled=false;
-}
 
-/* ── EMAIL TEMPLATES ── */
+/* ── EMAIL DRAFTS ── */
 const TEMPLATES={
-  cobranca:{dest:'cliente',assunto:'Regularização de Pagamento Pendente',ctx:'Cobrar educadamente o cliente sobre uma fatura em atraso, sem ser agressivo, mantendo o relacionamento.'},
-  proposta:{dest:'cliente em potencial',assunto:'Proposta Comercial Personalizada',ctx:'Apresentar uma proposta comercial destacando os benefícios e diferenciais do produto ou serviço.'},
-  reuniao:{dest:'equipe',assunto:'Convocação para Reunião',ctx:'Convocar a equipe para uma reunião importante, informando data, hora, local e pauta resumida.'},
-  agradecimento:{dest:'parceiro de negócios',assunto:'Agradecimento pela Parceria',ctx:'Agradecer pela parceria e colaboração recente, reforçando o relacionamento profissional.'},
-  followup:{dest:'cliente',assunto:'Acompanhamento — Proposta Enviada',ctx:'Fazer follow-up sobre uma proposta enviada anteriormente, perguntando sobre a decisão e reiterando disponibilidade.'},
-  desculpas:{dest:'cliente',assunto:'Pedido de Desculpas pelo Inconveniente',ctx:'Pedir desculpas profissionalmente por um problema ou atraso, oferecendo uma solução.'},
+  cobranca:{dest:'cliente',assunto:'Regularização de Pagamento Pendente',ctx:''},
+  proposta:{dest:'cliente em potencial',assunto:'Proposta Comercial Personalizada',ctx:''},
+  reuniao:{dest:'equipe',assunto:'Convocação para Reunião',ctx:''},
+  agradecimento:{dest:'parceiro de negócios',assunto:'Agradecimento pela Parceria',ctx:''},
+  followup:{dest:'cliente',assunto:'Acompanhamento — Proposta Enviada',ctx:''},
+  desculpas:{dest:'cliente',assunto:'Pedido de Desculpas pelo Inconveniente',ctx:''},
 };
-function applyTemplate(name){
-  const t=TEMPLATES[name];if(!t)return;
-  document.getElementById('eDest').value=t.dest;
-  document.getElementById('eAss').value=t.assunto;
-  document.getElementById('eCtx').value=t.ctx;
-  toast(`Template "${name}" aplicado.`);
+function applyTemplate(name){const t=TEMPLATES[name];if(!t)return;document.getElementById('eDest').value=t.dest;document.getElementById('eAss').value=t.assunto;document.getElementById('eCtx').value=t.ctx;document.getElementById('eCtx').focus();toast(`Template "${name}" aplicado.`);}
+function saveEmail(){
+  const dest=document.getElementById('eDest').value.trim(),ass=document.getElementById('eAss').value.trim(),ctx=document.getElementById('eCtx').value.trim();
+  if(!ctx)return toast('⚠ Escreva o e-mail antes de salvar.');
+  const draft=`Para: ${dest||'—'}\nAssunto: ${ass||'—'}\n\n${ctx}`;
+  emailDrafts.unshift({to:dest,sub:ass||'(sem assunto)',prv:ctx.substring(0,55)+'…',tm:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),full:draft});
+  localStorage.setItem('ex-emails',JSON.stringify(emailDrafts));
+  document.getElementById('emailOut').style.display='block';
+  document.getElementById('emailRes').textContent=draft;
+  renderHist();addAct('✉',`Rascunho: "${ass||dest}"`,'var(--gold)');toast('Rascunho salvo.');
 }
+function cpEmail(){const ctx=document.getElementById('eCtx').value.trim();if(!ctx)return toast('⚠ Nada para copiar.');navigator.clipboard.writeText(ctx);toast('E-mail copiado.');}
+function renderHist(){
+  const l=document.getElementById('histList');
+  if(!emailDrafts.length){l.innerHTML='<div style="padding:24px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Nenhum rascunho ainda.</div>';return;}
+  l.innerHTML=emailDrafts.slice(0,10).map((e,i)=>`<div class="hi" onclick="loadDraft(${i})"><div class="hi-to">Para: ${e.to||'—'}</div><div class="hi-sub">${e.sub}</div><div class="hi-prv">${e.prv}</div><div class="hi-tm">${e.tm}</div></div>`).join('');
+}
+function loadDraft(i){const d=emailDrafts[i];document.getElementById('eCtx').value=d.full.split('\n\n').slice(1).join('\n\n');toast('Rascunho carregado.');}
 
-/* ── EMAIL ── */
-async function genEmail(){
-  const dest=document.getElementById('eDest').value.trim()||'destinatário',tom=document.getElementById('eTom').value,ass=document.getElementById('eAss').value.trim(),ctx=document.getElementById('eCtx').value.trim();
-  if(!ctx)return toast('⚠ Descreva o contexto.');
-  const btn=document.getElementById('bEmail'),out=document.getElementById('emailOut'),res=document.getElementById('emailRes');
-  btn.disabled=true;out.classList.add('on');res.innerHTML='<div class="lr"><div class="spin"></div> Redigindo…</div>';document.getElementById('sentWrap').innerHTML='';
-  const sig=profile.name?`\n\nAtenciosamente,\n${profile.name}${profile.role?'\n'+profile.role:''}${profile.company?'\n'+profile.company:''}`:'' ;
-  try{
-    const r=await ai(`Especialista em comunicação corporativa brasileira refinada. Redija e-mail completo: assunto, saudação, corpo e despedida elegante. Tom: ${tom}. Inclua a assinatura fornecida. Texto limpo, sem markdown.`,`Para: ${dest}\nAssunto: ${ass||'a definir'}\nContexto: ${ctx}\nAssinatura:${sig}`);
-    res.textContent=r;eCnt++;
-    emailHistory.unshift({to:dest,sub:ass||'(sem assunto)',prv:ctx.substring(0,55)+'…',tm:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
-    renderHist();addAct('✉',`E-mail para: ${dest}`,'var(--gold)');toast('E-mail gerado.');
-  }catch(e){res.textContent='Erro.';}btn.disabled=false;
+/* ── REPORT ── */
+function saveReport(){
+  const dados=document.getElementById('rDados').value.trim();
+  if(!dados)return toast('⚠ Escreva o relatório antes de salvar.');
+  document.getElementById('rptRes').textContent=dados;
+  addAct('⊞','Relatório salvo','var(--slate)');toast('Relatório salvo.');
 }
-function renderHist(){const l=document.getElementById('histList');if(!emailHistory.length){l.innerHTML='<div style="padding:24px;text-align:center;color:var(--ink3);font-size:12px;font-style:italic">Nenhum ainda</div>';return;}l.innerHTML=emailHistory.map(e=>`<div class="hi"><div class="hi-to">Para: ${e.to}</div><div class="hi-sub">${e.sub}</div><div class="hi-prv">${e.prv}</div><div class="hi-tm">${e.tm}</div></div>`).join('');}
-function openAnalyze(){document.getElementById('analyzeOv').classList.add('on');}
-async function runAnalyze(){
-  const txt=document.getElementById('analyzeInp').value.trim();
-  if(!txt)return toast('⚠ Cole um e-mail.');
-  const btn=document.getElementById('bAnaly'),out=document.getElementById('analyzeOut'),res=document.getElementById('analyzeRes');
-  btn.disabled=true;out.classList.add('on');res.innerHTML='<div class="lr"><div class="spin"></div> Analisando…</div>';
-  try{
-    const r=await ai('Especialista em comunicação executiva. Analise o e-mail: 1) Sentimento (positivo/neutro/negativo/urgente), 2) Urgência, 3) Pontos principais, 4) Resposta sugerida. Português, tom executivo.',`E-mail:\n${txt}`);
-    res.textContent=r;
-    const low=r.toLowerCase();let badge='';
-    if(low.includes('urgente'))badge=`<span class="sent-b s-urg">⚡ Urgente</span>`;
-    else if(low.includes('positivo'))badge=`<span class="sent-b s-pos">✓ Positivo</span>`;
-    else if(low.includes('negativo'))badge=`<span class="sent-b s-neg">⚠ Negativo</span>`;
-    else badge=`<span class="sent-b s-neu">— Neutro</span>`;
-    document.getElementById('sentWrap').innerHTML=badge;
-  }catch(e){res.textContent='Erro.';}btn.disabled=false;
+function cpReport(){const d=document.getElementById('rDados').value.trim();if(!d)return toast('⚠ Nada para copiar.');navigator.clipboard.writeText(d);toast('Relatório copiado.');}
+
+/* ── MEETING ── */
+function saveMeeting(){
+  const pauta=document.getElementById('mPauta').value.trim(),tema=document.getElementById('mTema').value.trim();
+  if(!pauta)return toast('⚠ Escreva a pauta antes de salvar.');
+  const header=`PAUTA DE REUNIÃO\nTema: ${tema||'—'}\nParticipantes: ${document.getElementById('mPart').value||'—'}\nDuração: ${document.getElementById('mDur').value}\nData: ${new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'})}\n${'─'.repeat(40)}\n\n${pauta}`;
+  document.getElementById('meetRes').textContent=header;
+  addAct('◈',`Pauta: "${tema.substring(0,35)}"`,'var(--amber)');toast('Pauta salva.');
 }
+function cpMeeting(){const d=document.getElementById('mPauta').value.trim();if(!d)return toast('⚠ Nada para copiar.');navigator.clipboard.writeText(d);toast('Pauta copiada.');}
 
 /* ── NOTES ── */
 function saveNotes(){localStorage.setItem('ex-notes',JSON.stringify(notes));}
@@ -1251,56 +1031,33 @@ function saveNote(){
 }
 function delNote(i){notes.splice(i,1);saveNotes();renderNotes();toast('Nota removida.');}
 
-/* ── REPORT ── */
-async function genReport(){
-  const tipo=document.getElementById('rTipo').value,per=document.getElementById('rPer').value.trim()||'período atual',dados=document.getElementById('rDados').value.trim(),pub=document.getElementById('rPub').value.trim()||'gestão';
-  if(!dados)return toast('⚠ Insira os dados.');
-  const btn=document.getElementById('bRpt'),res=document.getElementById('rptRes');
-  btn.disabled=true;res.innerHTML='<div class="lr"><div class="spin"></div> Elaborando…</div>';
-  const sig=profile.name?`Elaborado por: ${profile.name}${profile.role?', '+profile.role:''}${profile.company?', '+profile.company:''}`:'' ;
-  try{const r=await ai('Especialista em redação corporativa brasileira. Relatórios profissionais refinados, seções em MAIÚSCULAS, análise clara e conclusão executiva. Sem asteriscos.',`Tipo: ${tipo}\nPeríodo: ${per}\nPúblico: ${pub}\n${sig}\n\nDados:\n${dados}\n\nCrie o relatório.`);res.textContent=r;rCnt++;addAct('⊞',`Relatório: ${tipo}`,'var(--slate)');toast('Relatório gerado.');}
-  catch(e){res.textContent='Erro.';}btn.disabled=false;
+/* ── POMODORO ── */
+function renderPomoTasks(){
+  const l=document.getElementById('pomoTaskList');
+  const pending=tasks.filter(t=>!t.done);
+  if(!pending.length){l.innerHTML='<div class="empty" style="padding:20px"><p style="font-size:12px;font-style:italic">Sem tarefas pendentes.</p></div>';return;}
+  l.innerHTML=pending.slice(0,6).map(t=>`<div class="ti" style="cursor:pointer" onclick="selPomoTask('${t.id}','${t.text.replace(/'/g,"\\'")}')"><div style="flex:1"><div class="ttxt">${t.text}</div></div><span class="pb ${t.priority==='alta'?'p-hi':t.priority==='média'?'p-mid':'p-lo'}">${t.priority.charAt(0).toUpperCase()+t.priority.slice(1)}</span></div>`).join('');
 }
-
-/* ── MEETING AGENDA ── */
-async function genMeeting(){
-  const tema=document.getElementById('mTema').value.trim(),part=document.getElementById('mPart').value.trim(),dur=document.getElementById('mDur').value,obj=document.getElementById('mObj').value.trim(),ctx=document.getElementById('mCtx').value.trim();
-  if(!tema)return toast('⚠ Informe o tema da reunião.');
-  const btn=document.getElementById('bMeet'),res=document.getElementById('meetRes');
-  btn.disabled=true;res.innerHTML='<div class="lr"><div class="spin"></div> Gerando pauta…</div>';
-  const sig=profile.name?`Organizada por: ${profile.name}${profile.company?', '+profile.company:''}`:'' ;
-  try{
-    const r=await ai('Especialista em facilitação de reuniões corporativas brasileiras. Gere uma pauta estruturada e profissional com: cabeçalho, tópicos com tempo estimado, responsável por cada item, e ponto de encerramento. Tom executivo.',`Tema: ${tema}\nParticipantes: ${part||'a definir'}\nDuração: ${dur}\nObjetivo: ${obj||'a definir'}\nContexto: ${ctx||'n/a'}\n${sig}`);
-    res.textContent=r;addAct('◈',`Pauta: "${tema.substring(0,35)}"`,'var(--amber)');toast('Pauta gerada.');
-  }catch(e){res.textContent='Erro.';}btn.disabled=false;
+function selPomoTask(id,txt){document.getElementById('pomoTaskTxt').textContent=txt;toast(`Tarefa selecionada.`);}
+function pomoFmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
+function pomoUpdateRing(){
+  const total=pomoIsBreak?pomoBreak:pomoFocus,pct=pomoLeft/total,circ=376;
+  document.getElementById('pomoRing').style.strokeDashoffset=circ*(1-pct);
+  document.getElementById('pomoRing').className='pomo-prog'+(pomoIsBreak?' brk':'');
+  document.getElementById('pomoTime').textContent=pomoFmt(pomoLeft);
+  document.getElementById('pomoLbl').textContent=pomoIsBreak?'PAUSA':'FOCO';
+  document.getElementById('pomoTime').style.color=pomoIsBreak?'var(--jade)':'var(--gold)';
 }
-
-/* ── CHAT ── */
-async function sendChat(){
-  const inp=document.getElementById('chatInp'),val=inp.value.trim();
-  if(!val)return;
-  addMsg('u',val);inp.value='';
-  chatHistory.push({role:'user',content:val});
-  const btn=document.getElementById('bChat');btn.disabled=true;
-  addMsg('a',null,true);
-  try{
-    const sys=`Você é um assistente executivo sofisticado para gestores brasileiros. ${profile.name?`Você está assistindo ${profile.name}${profile.role?', '+profile.role:''}${profile.company?', '+profile.company:''}.`:''} Responda em português com precisão, elegância e utilidade prática.`;
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:sys,messages:chatHistory})});
-    const d=await r.json(),txt=d.content?.[0]?.text||'Erro.';
-    chatHistory.push({role:'assistant',content:txt});
-    document.getElementById('chatMsgs').lastElementChild.remove();
-    addMsg('a',txt);
-  }catch(e){document.getElementById('chatMsgs').lastElementChild.remove();addMsg('a','Não foi possível conectar.');}
-  btn.disabled=false;
+function pomoTick(){
+  if(pomoLeft<=0){if(!pomoIsBreak)pomoCycle++;pomoIsBreak=!pomoIsBreak;pomoLeft=pomoIsBreak?pomoBreak:pomoFocus;addNotif('⏱',pomoIsBreak?'Pausa! Descanse.':'Hora de focar!');toast(pomoIsBreak?'⏱ Pausa!':'⏱ Foco iniciado!');updatePomoCycles();}
+  else pomoLeft--;
+  pomoUpdateRing();
 }
-function addMsg(role,txt,loading=false){
-  const msgs=document.getElementById('chatMsgs');
-  const d=document.createElement('div');d.className=`msg ${role}`;
-  d.innerHTML=`<div class="msg-bub">${loading?'<div class="lr"><div class="spin"></div> Elaborando…</div>':txt.replace(/\n/g,'<br>')}</div><div class="msg-tm">${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</div>`;
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
-}
-function sendSug(el){document.getElementById('chatInp').value=el.textContent;sendChat();}
-document.getElementById('chatInp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
+function pomoToggle(){if(pomoRunning){clearInterval(pomoTimer);pomoRunning=false;document.getElementById('pomoBtn').textContent='▶ Retomar';}else{pomoTimer=setInterval(pomoTick,1000);pomoRunning=true;document.getElementById('pomoBtn').textContent='⏸ Pausar';}}
+function pomoReset(){clearInterval(pomoTimer);pomoRunning=false;pomoIsBreak=false;pomoLeft=pomoFocus;pomoUpdateRing();document.getElementById('pomoBtn').textContent='▶ Iniciar';}
+function updatePomoCycles(){document.querySelectorAll('.pomo-dot').forEach((d,i)=>d.classList.toggle('done',i<pomoCycle%4));}
+function pomoApply(){pomoFocus=parseInt(document.getElementById('pomoFMin').value||25)*60;pomoBreak=parseInt(document.getElementById('pomoBMin').value||5)*60;pomoReset();toast('Configuração aplicada.');}
+pomoUpdateRing();
 </script>
 </body>
 </html>
